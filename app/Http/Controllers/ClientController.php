@@ -51,8 +51,18 @@ class ClientController extends Controller
      * @return Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    { 
+        $client = Client::find($id);
+        
+        $client->name = $request->get('name');
+        $client->responsible = $request->get('responsible');
+        $client->email = $request->get('email');
+        $client->phone = $request->get('phone');
+        $client->obs = $request->get('obs');
+        
+        $client->save();
+        
+        return $client;
     }
 
     /**
