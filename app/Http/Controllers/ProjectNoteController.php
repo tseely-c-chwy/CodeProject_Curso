@@ -1,18 +1,18 @@
 <?php
 
-namespace CodeProject\Http\Controllers;
+namespace CodeProjectNote\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Services\ProjectService;
+use CodeProjectNote\Repositories\ProjectNoteRepository;
+use CodeProjectNote\Services\ProjectNoteService;
 
-class ProjectController extends Controller
+class ProjectNoteController extends Controller
 {
     private $repository;
     private $service;
     
-    public function __construct(ProjectRepository $repository, ProjectService $service) {
+    public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service) {
         $this->service = $service;
         $this->repository = $repository;
     }
@@ -22,9 +22,9 @@ class ProjectController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        return $this->repository->with(['owner','client'])->all();
+        return $this->repository->findWhere(['project_id' => $id]);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->with(['owner','client'])->find($id);
+        return $this->repository->find($id);
     }
 
 
