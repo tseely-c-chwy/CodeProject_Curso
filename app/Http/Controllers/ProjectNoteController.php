@@ -1,11 +1,11 @@
 <?php
 
-namespace CodeProjectNote\Http\Controllers;
+namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProjectNote\Repositories\ProjectNoteRepository;
-use CodeProjectNote\Services\ProjectNoteService;
+use CodeProject\Repositories\ProjectNoteRepository;
+use CodeProject\Services\ProjectNoteService;
 
 class ProjectNoteController extends Controller
 {

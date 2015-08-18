@@ -1,8 +1,8 @@
 <?php
 
-namespace CodeProjectNote\Services;
-use CodeProjectNote\Repositories\ProjectNoteRepository;
-use CodeProjectNote\Validators\ProjectNoteValidator;
+namespace CodeProject\Services;
+use CodeProject\Repositories\ProjectNoteRepository;
+use CodeProject\Validators\ProjectNoteValidator;
 use \Prettus\Validator\Exceptions\ValidatorException;
 
 /**
