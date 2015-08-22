@@ -13,13 +13,13 @@ app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProv
             controller: 'HomeController'
         });
     OAuthProvider.configure({
-          baseUrl: 'http://curso.app/oauth/access_token',
-          clientId: '1f350c1b-4835-11e5-96b3-0800279114ca',
-          clientSecret: '2b9f38bc-4835-11e5-96b3-0800279114ca' // optional
+          baseUrl: 'http://curso.app',
+          clientId: 'appid1',
+          clientSecret: 'secret'
         });
 }]);
 
-app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
+/*app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
     $rootScope.$on('oauth:error', function(event, rejection) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
       if ('invalid_grant' === rejection.data.error) {
@@ -34,4 +34,4 @@ app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) 
       // Redirect to `/login` with the `error_reason`.
       return $window.location.href = '/login?error_reason=' + rejection.data.error;
     });
-  }]);
+  }]);*/

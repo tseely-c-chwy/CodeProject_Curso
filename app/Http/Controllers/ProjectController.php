@@ -24,7 +24,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return $this->repository->with(['owner','client'])->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
+        //return $this->repository->with(['owner','client'])->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
+        return $this->repository->with(['owner','client'])->skipPresenter()->all();
     }
 
     /**
@@ -46,11 +47,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {   
-        if(!$this->checkProjectPermissions($id)) {
-            return ['error' => 'Access Denied'];
-        }
+        //if(!$this->checkProjectPermissions($id)) {
+            //return ['error' => 'Access Denied'];
+        //}
         
-        return $this->repository->with(['owner','client'])->find($id);
+        return $this->repository->with(['owner','client'])->skipPresenter()->find($id);
     }
 
 
@@ -63,9 +64,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     { 
-        if(!$this->checkProjectOwner($id)) {
+        /*if(!$this->checkProjectOwner($id)) {
             return ['error' => 'Access Denied'];
-        }
+        }*/
         
         return $this->service->update($request, $id);
     }
@@ -78,9 +79,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->checkProjectOwner($id)) {
+        /*if(!$this->checkProjectOwner($id)) {
             return ['error' => 'Access Denied'];
-        }
+        }*/
         
         $this->repository->find($id)->delete();
     }
