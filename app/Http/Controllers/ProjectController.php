@@ -50,8 +50,8 @@ class ProjectController extends Controller
         //if(!$this->checkProjectPermissions($id)) {
             //return ['error' => 'Access Denied'];
         //}
-        
-        return $this->repository->with(['owner','client'])->skipPresenter()->find($id);
+
+        return $this->service->find($id);
     }
 
 
@@ -83,7 +83,7 @@ class ProjectController extends Controller
             return ['error' => 'Access Denied'];
         }*/
         
-        $this->repository->find($id)->delete();
+        return $this->service->delete($id);
     }
     
     private function checkProjectOwner($projectId) {

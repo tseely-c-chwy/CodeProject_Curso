@@ -27,6 +27,18 @@ class ProjectService {
         $this->storage = $storage;
     }
     
+    public function find($id) {
+
+        if ($this->repository->exists($id)) {
+            return $this->repository->with(['owner','client'])->skipPresenter()->find($id);
+        }
+        
+        return [
+            'error' => true,
+            'message' => 'Project not found.',
+        ];
+    }
+    
     public function create(array $data) {
         
         try {
@@ -44,6 +56,14 @@ class ProjectService {
     public function update($request, $id) {
         
         try {
+            
+            if (!$this->repository->exists($id)) {
+                return [
+                    'error' => true,
+                    'message' => 'Project does not exist.',
+                ];          
+            }
+            
             $this->validator->with($request->all())->passesOrFail();
             
             $project = $this->repository->find($id);
@@ -66,6 +86,19 @@ class ProjectService {
             ];
         }
         
+    }
+    
+    public function delete($id) {
+        
+        if (!$this->repository->exists($id)) {
+            return [
+                'error' => true,
+                'message' => 'Project does not exist.',
+            ];          
+        }
+        
+        
+        return $this->repository->find($id)->delete();
     }
     
     public function createFile(array $data) {

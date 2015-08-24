@@ -20,6 +20,18 @@ class ClientService {
         $this->validator = $validator;
     }
     
+    public function find($id) {
+        
+        if ($this->repository->exists($id)) {
+            return $this->repository->find($id);
+        }
+        
+        return [
+            'error' => true,
+            'message' => 'Client not found.',
+        ];
+    }
+    
     public function create(array $data) {
         
         try {
@@ -37,6 +49,14 @@ class ClientService {
     public function update($request, $id) {
         
         try {
+            
+            if (!$this->repository->exists($id)) {
+                return [
+                    'error' => true,
+                    'message' => 'Client does not exist.',
+                ];          
+            }
+            
             $this->validator->with($request->all())->passesOrFail();
             
             $client = $this->repository->find($id);
@@ -59,4 +79,18 @@ class ClientService {
         }
         
     }
+    
+    public function delete($id) {
+
+        if (!$this->repository->exists($id)) {
+
+            return [
+                'error' => true,
+                'message' => 'Client does not exist.',
+            ];          
+        }
+        
+        return $this->repository->find($id)->delete();
+    }
+    
 }
