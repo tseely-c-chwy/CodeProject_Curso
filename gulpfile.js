@@ -86,5 +86,5 @@ gulp.task('default', ['clear-build-folder'], function() {
 gulp.task('watch-dev', ['clear-build-folder'], function() {
     liveReload.listen();
     gulp.start('copy-styles','copy-scripts','copy-html');
-    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts']);
+    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts','copy-html']);
 });

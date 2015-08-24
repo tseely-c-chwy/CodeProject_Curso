@@ -1,6 +1,6 @@
 var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers']);
 
-angular.module('app.controllers',['angular-oauth2']);
+angular.module('app.controllers',['ngMessages','angular-oauth2']);
 
 app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProvider) {
     $routeProvider
@@ -19,7 +19,7 @@ app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProv
         });
 }]);
 
-/*app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
+app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
     $rootScope.$on('oauth:error', function(event, rejection) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
       if ('invalid_grant' === rejection.data.error) {
@@ -34,4 +34,4 @@ app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProv
       // Redirect to `/login` with the `error_reason`.
       return $window.location.href = '/login?error_reason=' + rejection.data.error;
     });
-  }]);*/
+  }]);

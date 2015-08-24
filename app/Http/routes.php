@@ -19,6 +19,10 @@ Route::post('oauth/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
 });
 
+Route::post('oauth2/token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
 //Route::group(['middleware' => 'oauth'], function() {
     
     Route::resource('client','ClientController', ['except'=>['create','edit']]);

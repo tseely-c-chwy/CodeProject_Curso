@@ -72,8 +72,8 @@
         <script src="{{ asset('build/js/vendor/ui-bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/navbar.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/app.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/login.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/home.js') }}" type="text/javascript"></script>
