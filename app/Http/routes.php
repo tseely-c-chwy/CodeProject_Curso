@@ -19,10 +19,6 @@ Route::post('oauth/access_token', function() {
     return Response::json(Authorizer::issueAccessToken());
 });
 
-Route::post('oauth2/token', function() {
-    return Response::json(Authorizer::issueAccessToken());
-});
-
 //Route::group(['middleware' => 'oauth'], function() {
     
     Route::resource('client','ClientController', ['except'=>['create','edit']]);
@@ -34,12 +30,11 @@ Route::post('oauth2/token', function() {
     
     Route::group(['prefix'=>'project'], function() {
         Route::get('{id}/note','ProjectNoteController@index');
+        Route::post('{id}/note','ProjectNoteController@store');
+        Route::get('{id}/note/{noteId}','ProjectNoteController@show');
+        Route::delete('{id}/note/{noteId}','ProjectNoteController@destroy');
+        Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');
         Route::post('{id}/file','ProjectFileController@store');
     });
-
-    Route::post('/project_note','ProjectNoteController@store');
-    Route::get('/project_note/{id}','ProjectNoteController@show');
-    Route::delete('/project_note/{id}','ProjectNoteController@destroy');
-    Route::put('/project_note/{id}', 'ProjectNoteController@update');
     
 //});

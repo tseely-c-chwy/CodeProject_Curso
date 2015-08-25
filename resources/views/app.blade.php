@@ -75,8 +75,17 @@
         <script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/app.js') }}" type="text/javascript"></script>
+        
+        <!-- Controllers -->
         <script src="{{ asset('build/js/controllers/login.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/home.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/client/clientList.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/client/clientNew.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}" type="text/javascript"></script>
+        
+        <!-- Services -->
+        <script src="{{ asset('build/js/services/client.js') }}" type="text/javascript"></script>
     @else
         <script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>
     @endif
