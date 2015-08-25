@@ -41,6 +41,22 @@ app.config([
             templateUrl: '/build/views/client/remove.html',
             controller: 'ClientRemoveController'
         })
+        .when('/project/:id/notes', {
+            templateUrl: '/build/views/projectNote/list.html',
+            controller: 'ProjectNoteListController'
+        })
+        .when('/project/:id/notes/new', {
+            templateUrl: '/build/views/projectNote/new.html',
+            controller: 'ProjectNoteNewController'
+        })
+        .when('/project/:id/notes/:idNote/edit', {
+            templateUrl: '/build/views/projectNote/edit.html',
+            controller: 'ProjectNoteEditController'
+        })
+        .when('/project/:id/notes/:idNote/remove', {
+            templateUrl: '/build/views/projectNote/remove.html',
+            controller: 'ProjectNoteRemoveController'
+        })
         .when('/home', {
             templateUrl: '/build/views/home.html',
             controller: 'HomeController'

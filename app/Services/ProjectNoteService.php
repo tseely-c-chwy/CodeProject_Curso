@@ -41,7 +41,7 @@ class ProjectNoteService {
             
             $projecyNote = $this->repository->find($id);
             
-            $projecyNote->project_id = $request->get('owner_id');
+            $projecyNote->project_id = $request->get('project_id');
             $projecyNote->title = $request->get('title');
             $projecyNote->note = $request->get('note');
 

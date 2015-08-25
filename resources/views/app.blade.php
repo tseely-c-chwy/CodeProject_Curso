@@ -83,9 +83,14 @@
         <script src="{{ asset('build/js/controllers/client/clientNew.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectNote/projectNoteList.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectNote/projectNoteNew.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectNote/projectNoteEdit.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectNote/projectNoteRemove.js') }}" type="text/javascript"></script>
         
         <!-- Services -->
         <script src="{{ asset('build/js/services/client.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/services/projectNote.js') }}" type="text/javascript"></script>
     @else
         <script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>
     @endif
