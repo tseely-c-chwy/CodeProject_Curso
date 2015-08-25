@@ -23,6 +23,7 @@ class ClientService {
     public function find($id) {
         
         if ($this->repository->exists($id)) {
+            //return $this->repository->with(['project'])->find($id);
             return $this->repository->find($id);
         }
         
@@ -90,7 +91,14 @@ class ClientService {
             ];          
         }
         
-        return $this->repository->find($id)->delete();
+        if ($this->repository->isAssociatedWithProject($id)) {
+             return [
+                'error' => true,
+                'message' => 'There is a project associated with this client ID. Please delete the Project first.',
+            ];            
+        }
+        
+        return $this->repository->find($id)->delete() ? 'Client deleted.' : 'Error deleting client.';
     }
     
 }

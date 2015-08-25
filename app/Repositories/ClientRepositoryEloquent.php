@@ -29,4 +29,14 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
         return false;
     }
     
+    public function isAssociatedWithProject($id) {
+        $client = $this->find($id);
+
+        if (count($client->projects)) {
+            return true;
+        }
+        
+        return false;
+    }
+
 }
