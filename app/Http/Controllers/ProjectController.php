@@ -86,6 +86,19 @@ class ProjectController extends Controller
         return $this->service->delete($id);
     }
     
+    public function listMembers($id) {
+        $project = $this->repository->with(['members'])->skipPresenter()->find($id);
+        return $project->members;
+    }
+    
+    public function addMember($projectId, $memberId) {
+        return $this->service->addMember($projectId, $memberId);
+    }
+    
+    public function removeMember($projectId, $memberId) {
+        return $this->service->removeMember($projectId, $memberId);
+    }
+    
     private function checkProjectOwner($projectId) {
         
         $userId = \Authorizer::getResourceOwnerId();

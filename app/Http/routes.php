@@ -29,11 +29,21 @@ Route::post('oauth/access_token', function() {
     });*/
     
     Route::group(['prefix'=>'project'], function() {
+        
         Route::get('{id}/note','ProjectNoteController@index');
         Route::post('{id}/note','ProjectNoteController@store');
         Route::get('{id}/note/{noteId}','ProjectNoteController@show');
         Route::delete('{id}/note/{noteId}','ProjectNoteController@destroy');
         Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');
+       
+        Route::get('{id}/tasks','ProjectTaskController@index');
+        Route::post('{id}/task','ProjectTaskController@store');
+        Route::get('{id}/task/{noteId}','ProjectTaskController@show');
+        Route::delete('{id}/task/{noteId}','ProjectTaskController@destroy');
+        Route::put('{id}/task/{noteId}', 'ProjectTaskController@update');
+        
+        Route::get('{id}/members','ProjectController@listMembers');
+        
         Route::post('{id}/file','ProjectFileController@store');
     });
     

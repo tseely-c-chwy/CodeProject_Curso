@@ -4,15 +4,16 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ProjectNoteRepository;
-use CodeProject\Services\ProjectNoteService;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Services\ProjectTaskService;
 
-class ProjectNoteController extends Controller
+class ProjectTaskController extends Controller
 {
+    
     private $repository;
     private $service;
     
-    public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service) {
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service) {
         $this->service = $service;
         $this->repository = $repository;
     }
@@ -44,11 +45,10 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id, $noteId)
+    public function show($id, $taskId)
     {
-        return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+        return $this->repository->findWhere(['project_id' => $id, 'id' => $taskId]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -57,9 +57,9 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id, $noteId)
-    { 
-        return $this->service->update($request, $noteId);
+    public function update(Request $request, $id, $taskId)
+    {
+        return $this->service->update($request, $taskId);
     }
 
     /**
@@ -68,8 +68,8 @@ class ProjectNoteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id, $noteId)
+    public function destroy($id, $taskId)
     {
-       $this->repository->find($noteId)->delete();
+        $this->repository->find($taskId)->delete();
     }
 }

@@ -108,4 +108,46 @@ class ProjectService {
         
         $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
     }
+    
+    public function addMember($projectId, $memberId) {
+        
+        if (!$this->repository->exists($projectId)) {
+            return [
+                'error' => true,
+                'message' => 'Project does not exist.',
+            ];          
+        }
+        
+        if ($this->repository->hasMember($projectId, $memberId)) {
+            return [
+                'error' => true,
+                'message' => 'Member already belongs to project.',
+            ];          
+        }
+        
+        $project = $this->repository->skipPresenter()->find($projectId);
+        
+        return $project->members()->attach($memberId);
+    }
+    
+    public function removeMember($projectId, $memberId) {
+        
+        if (!$this->repository->exists($projectId)) {
+            return [
+                'error' => true,
+                'message' => 'Project does not exist.',
+            ];          
+        }
+        
+        if (!$this->repository->hasMember($projectId, $memberId)) {
+            return [
+                'error' => true,
+                'message' => 'Project does not have this member.',
+            ];          
+        }
+        
+        $project = $this->repository->skipPresenter()->find($projectId);
+        
+        return $project->members()->detach($memberId);
+    }
 }
