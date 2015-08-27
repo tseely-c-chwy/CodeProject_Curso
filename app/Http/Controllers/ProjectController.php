@@ -91,6 +91,14 @@ class ProjectController extends Controller
         return $project->members;
     }
     
+    public function isMember($projectId, $memberId) {
+        if ($this->service->isMember($projectId, $memberId)) {
+            return ['message' => 'User is member.'];
+        }
+        
+        return ['message' => 'User is not a member'];
+    }
+    
     public function addMember($projectId, $memberId) {
         return $this->service->addMember($projectId, $memberId);
     }

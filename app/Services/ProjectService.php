@@ -109,6 +109,10 @@ class ProjectService {
         $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
     }
     
+    public function isMember($projectId, $memberId) {
+        return $this->repository->hasMember($projectId, $memberId);
+    }
+    
     public function addMember($projectId, $memberId) {
         
         if (!$this->repository->exists($projectId)) {
@@ -127,7 +131,9 @@ class ProjectService {
         
         $project = $this->repository->skipPresenter()->find($projectId);
         
-        return $project->members()->attach($memberId);
+        $project->members()->attach($memberId);
+        
+        return ['error' => false, 'message' => 'Member added to project.'];
     }
     
     public function removeMember($projectId, $memberId) {
@@ -148,6 +154,8 @@ class ProjectService {
         
         $project = $this->repository->skipPresenter()->find($projectId);
         
-        return $project->members()->detach($memberId);
+        $project->members()->detach($memberId);
+        
+        return ['error' => false, 'message' => 'Member removed from project.'];
     }
 }

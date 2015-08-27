@@ -44,6 +44,11 @@ Route::post('oauth/access_token', function() {
         
         Route::get('{id}/members','ProjectController@listMembers');
         
+        //Rotas teste para projeto Fase 3
+        Route::get('{projectId}/member/{memberId}','ProjectController@isMember');
+        Route::post('{projectId}/member/{memberId}/add','ProjectController@addMember');
+        Route::post('{projectId}/member/{memberId}/remove','ProjectController@removeMember');
+        
         Route::post('{id}/file','ProjectFileController@store');
     });
     
