@@ -19,6 +19,7 @@ class ProjectService {
     protected $validator;
     protected $filesystem;
     protected $storage;
+    protected $fileValidator;
     
     public function __construct(ProjectRepository $repository, ProjectValidator $validator, Filesystem $filesystem, Storage $storage) {
         $this->repository = $repository;
@@ -102,11 +103,71 @@ class ProjectService {
     }
     
     public function createFile(array $data) {
+        
+        if (!$this->repository->exists($data['project_id'])) {
+            return [
+                'error' => true,
+                'message' => 'Project does not exist.',
+            ];          
+        }
+        
+        if (empty($data['name']) || empty($data['description'])) {
+            return [
+                'error' => true,
+                'message' => 'File name and description are required.',
+            ];            
+        }
+
+        if (empty($data['extension'])) {
+            return [
+                'error' => true,
+                'message' => 'System could not get the file extension.',
+            ];            
+        }
+
         $project = $this->repository->skipPresenter()->find($data['project_id']);
-        
+
         $projectFile = $project->files()->create($data);
+
+        return (string)$this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
         
-        $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
+    }
+    
+    public function removeFile($projectId, $fileId) {
+        
+        if (!$this->repository->exists($projectId)) {
+            return [
+                'error' => true,
+                'message' => 'Project does not exist.',
+            ];          
+        }
+        
+        $project = $this->repository->skipPresenter()->with(['files'])->find($projectId);
+        
+        if (!count($project->files)) {
+            return [
+                'error' => true,
+                'message' => 'Project has no files.',
+            ];           
+        }
+        
+        foreach($project->files as $file) {
+            if ($file->id == $fileId) {
+                $filename = $file->id.'.'.$file->extension;
+                $project->files()->where(['id' => $fileId])->delete();
+                $this->storage->delete($filename);
+                return [
+                    'error' => false,
+                    'message' => 'File deleted.',
+                ]; 
+            }
+        }
+        
+        return [
+            'error' => true,
+            'message' => 'File not found.',
+        ]; 
+        
     }
     
     public function isMember($projectId, $memberId) {

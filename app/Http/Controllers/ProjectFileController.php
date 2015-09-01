@@ -35,6 +35,13 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request)
     {
+        if(empty($request->file('file'))) {
+            return [
+                'error'     => true,
+                'message'   => 'Please select file to upload.',
+            ];
+        }
+        
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
         
@@ -44,7 +51,7 @@ class ProjectFileController extends Controller
         $data['description'] = $request->description;
         $data['project_id'] = $request->project_id;
         
-        $this->service->createFile($data);
+        return $this->service->createFile($data);
         
     }
 
@@ -86,13 +93,13 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, $fileId)
     {
-        if(!$this->checkProjectOwner($id)) {
-            return ['error' => 'Access Denied'];
-        }
+        //if(!$this->checkProjectOwner($id)) {
+            //return ['error' => 'Access Denied'];
+        //}
         
-        $this->repository->find($id)->delete();
+        return $this->service->removeFile($id, $fileId);
     }
     
     private function checkProjectOwner($projectId) {
