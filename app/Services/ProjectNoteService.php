@@ -39,7 +39,7 @@ class ProjectNoteService {
         try {
             $this->validator->with($request->all())->passesOrFail();
             
-            $projecyNote = $this->repository->find($id);
+            $projecyNote = $this->repository->skipPresenter()->find($id);
             
             $projecyNote->project_id = $request->get('project_id');
             $projecyNote->title = $request->get('title');

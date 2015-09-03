@@ -17,9 +17,20 @@ app.provider('appConfig', function() {
 });
 
 app.config([
-    '$routeProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider', 
-    function($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
-    
+    '$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider', 
+    function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+    $httpProvider.defaults.transformResponse = function(data, headers) {
+                    var headersGetter = headers();
+                    if (headersGetter['content-type'] === 'application/json' ||
+                            headersGetter['content-type'] === 'text/json') {
+                        var dataJson = JSON.parse(data);
+                        if(dataJson.hasOwnProperty('data')) {
+                            dataJson = dataJson.data;
+                        }
+                        return dataJson;
+                    }
+                    return data;
+                };
     $routeProvider
         .when('/login', {
             templateUrl: '/build/views/login.html',
@@ -56,6 +67,10 @@ app.config([
         .when('/project/:id/notes/:idNote/remove', {
             templateUrl: '/build/views/projectNote/remove.html',
             controller: 'ProjectNoteRemoveController'
+        })
+        .when('/project/:id/notes/:idNote', {
+            templateUrl: '/build/views/projectNote/show.html',
+            controller: 'ProjectNoteShowController'
         })
         .when('/home', {
             templateUrl: '/build/views/home.html',

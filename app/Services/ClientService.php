@@ -60,7 +60,7 @@ class ClientService {
             
             $this->validator->with($request->all())->passesOrFail();
             
-            $client = $this->repository->find($id);
+            $client = $this->repository->skipPresenter()->find($id);
 
             $client->name = $request->get('name');
             $client->responsible = $request->get('responsible');
@@ -98,7 +98,7 @@ class ClientService {
             ];            
         }
         
-        return $this->repository->find($id)->delete() ? 'Client deleted.' : 'Error deleting client.';
+        return $this->repository->skipPresenter()->find($id)->delete() ? 'Client deleted.' : 'Error deleting client.';
     }
     
 }

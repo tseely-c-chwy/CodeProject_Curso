@@ -31,7 +31,7 @@ class ProjectService {
     public function find($id) {
 
         if ($this->repository->exists($id)) {
-            return $this->repository->with(['owner','client'])->skipPresenter()->find($id);
+            return $this->repository->with(['owner','client'])->find($id);
         }
         
         return [
@@ -67,7 +67,7 @@ class ProjectService {
             
             $this->validator->with($request->all())->passesOrFail();
             
-            $project = $this->repository->find($id);
+            $project = $this->repository->skipPresenter()->find($id);
             
             $project->owner_id = $request->get('owner_id');
             $project->client_id = $request->get('client_id');
@@ -99,23 +99,23 @@ class ProjectService {
         }
         
         
-        return $this->repository->find($id)->delete();
+        return $this->repository->skipPresenter()->find($id)->delete();
     }
     
     public function createFile(array $data) {
         
+        if (empty($data['name']) || empty($data['name']) || empty($data['description'])) {
+            return [
+                'error' => true,
+                'message' => '"project_id", "name" and "description" are required fields.',
+            ];            
+        }
+        
         if (!$this->repository->exists($data['project_id'])) {
             return [
                 'error' => true,
-                'message' => 'Project does not exist.',
+                'message' => 'Project does not exist, please enter a correct prject_id param.',
             ];          
-        }
-        
-        if (empty($data['name']) || empty($data['description'])) {
-            return [
-                'error' => true,
-                'message' => 'File name and description are required.',
-            ];            
         }
 
         if (empty($data['extension'])) {
@@ -142,7 +142,7 @@ class ProjectService {
             ];          
         }
         
-        $project = $this->repository->skipPresenter()->with(['files'])->find($projectId);
+        $project = $this->repository->with(['files'])->skipPresenter()->find($projectId);
         
         if (!count($project->files)) {
             return [

@@ -4,18 +4,22 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Services\ClientService;
+use CodeProject\Http\Requests;
+use CodeProject\Http\Controllers\Controller;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
-class ClientController extends Controller
+class UserController extends Controller
 {
     
-    private $repository;
-    private $service;
+    protected $repository;
     
-    public function __construct(ClientRepository $repository, ClientService $service) {
-        $this->service = $service;
+    public function __construct(UserRepository $repository) {
         $this->repository = $repository;
+    }
+    
+    public function authenticated() {
+        $userId = Authorizer::getResourceOwnerId();
+        return $this->repository->find($userId);
     }
     
     /**
@@ -25,7 +29,17 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return $this->repository->all();
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -36,7 +50,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->service->create($request->all());
+        //
     }
 
     /**
@@ -47,9 +61,19 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return $this->service->find($id);
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -59,8 +83,8 @@ class ClientController extends Controller
      * @return Response
      */
     public function update(Request $request, $id)
-    { 
-        return $this->service->update($request, $id);
+    {
+        //
     }
 
     /**
@@ -71,6 +95,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-       return $this->service->delete($id);
+        //
     }
 }

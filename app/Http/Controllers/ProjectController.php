@@ -25,7 +25,7 @@ class ProjectController extends Controller
     public function index()
     {
         //return $this->repository->with(['owner','client'])->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
-        return $this->repository->with(['owner','client'])->skipPresenter()->all();
+        return $this->repository->with(['owner','client'])->all();
     }
 
     /**
@@ -87,7 +87,7 @@ class ProjectController extends Controller
     }
     
     public function listMembers($id) {
-        $project = $this->repository->with(['members'])->skipPresenter()->find($id);
+        $project = $this->repository->with(['members'])->find($id);
         return $project->members;
     }
     
