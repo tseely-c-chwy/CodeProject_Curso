@@ -4,13 +4,13 @@ namespace CodeProject\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CodeProject\Entities\UserRepository;
+use CodeProject\Entities\User;
 
 /**
- * Class UserRepositoryRepositoryEloquent
+ * Class UserRepositoryEloquent
  * @package namespace CodeProject\Repositories;
  */
-class UserRepositoryRepositoryEloquent extends BaseRepository implements UserRepositoryRepository
+class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     /**
      * Specify Model class name
@@ -19,7 +19,7 @@ class UserRepositoryRepositoryEloquent extends BaseRepository implements UserRep
      */
     public function model()
     {
-        return UserRepository::class;
+        return User::class;
     }
 
     /**
