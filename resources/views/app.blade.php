@@ -79,6 +79,9 @@
         <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/app.js') }}" type="text/javascript"></script>
         
+        <!-- Filters -->
+        <script src="{{ asset('build/js/filters/dateBr.js') }}" type="text/javascript"></script>
+        
         <!-- Controllers -->
         <script src="{{ asset('build/js/controllers/login.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/home.js') }}" type="text/javascript"></script>
@@ -91,11 +94,16 @@
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteEdit.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteRemove.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectNote/projectNoteShow.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/project/projectList.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/project/projectNew.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/project/projectEdit.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/project/projectRemove.js') }}" type="text/javascript"></script>
         
         <!-- Services -->
         <script src="{{ asset('build/js/services/client.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/projectNote.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/user.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/services/project.js') }}" type="text/javascript"></script>
     @else
         <script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>
     @endif

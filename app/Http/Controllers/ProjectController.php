@@ -24,8 +24,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //return $this->repository->with(['owner','client'])->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
-        return $this->repository->with(['owner','client'])->all();
+        return $this->repository->with(['owner','client'])->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
     }
 
     /**
@@ -79,9 +78,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        /*if(!$this->checkProjectOwner($id)) {
-            return ['error' => 'Access Denied'];
-        }*/
+        if(!$this->checkProjectOwner($id)) {
+            return ['error' => true, 'message' => 'Access Denied'];
+        }
         
         return $this->service->delete($id);
     }

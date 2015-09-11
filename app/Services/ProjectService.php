@@ -31,7 +31,7 @@ class ProjectService {
     public function find($id) {
 
         if ($this->repository->exists($id)) {
-            return $this->repository->with(['owner','client'])->find($id);
+            return $this->repository->skipPresenter()->find($id);
         }
         
         return [
@@ -99,7 +99,7 @@ class ProjectService {
         }
         
         
-        return $this->repository->skipPresenter()->find($id)->delete();
+        return (string)$this->repository->skipPresenter()->find($id)->delete();
     }
     
     public function createFile(array $data) {
