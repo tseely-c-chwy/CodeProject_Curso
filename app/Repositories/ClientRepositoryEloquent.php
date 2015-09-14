@@ -18,6 +18,9 @@ use CodeProject\Presenters\ClientPresenter;
  * @author thiago
  */
 class ClientRepositoryEloquent extends BaseRepository implements ClientRepository {
+    
+    protected $fieldSearchable = ['name'];
+    
     public function model() {
         return Client::class;
     }

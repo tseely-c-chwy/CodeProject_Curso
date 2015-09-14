@@ -72,7 +72,7 @@
         <script src="{{ asset('build/js/vendor/angular-animate.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-messages.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/bootstrap.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('build/js/vendor/ui-bootstrap.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/vendor/ui-bootstrap-tpls.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/navbar.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>

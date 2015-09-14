@@ -20,9 +20,10 @@
                         <div class="form-group" ng-class="{'has-error' : !form.client.$valid && form.client.$touched}">
                             <label class="col-md-4 control-label">Client</label>
                             <div class="col-md-6">
-                                <select class="form-control" name="client" ng-model="project.client_id" ng-options="client.id as client.name for client in clients track by client.id" required>
-                                    <option value="">Please Select a Client</option>
-                                </select>
+                                <input type="text" class="form-control" name="client" ng-model="project.client_id" 
+                                       typeahead="client.id as client.name for client in getClients($viewValue)|limitTo:10" 
+                                       typeahead-input-formatter="formatName($model)"
+                                       required>
                                 <div ng-messages="form.client.$error" class="help-block" ng-show="form.client.$touched">
                                     <div ng-message="required">Campo Obrigatório</div>
                                 </div>
