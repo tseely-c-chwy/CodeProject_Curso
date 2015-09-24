@@ -44,13 +44,12 @@ Route::group(['middleware' => 'oauth'], function() {
         
         Route::get('{id}/members','ProjectController@listMembers');
         
-        //Rotas teste para projeto Fase 3
-        Route::get('{projectId}/member/{memberId}','ProjectController@isMember');
-        Route::post('{projectId}/member/{memberId}/add','ProjectController@addMember');
-        Route::post('{projectId}/member/{memberId}/remove','ProjectController@removeMember');
-        
+        Route::get('{id}/file','ProjectFileController@index');
+        Route::get('file/{fileId}','ProjectFileController@show');
+        Route::get('file/{fileId}/download','ProjectFileController@showFile');
         Route::post('{id}/file','ProjectFileController@store');
-        Route::delete('{id}/file/{fileId}','ProjectFileController@destroy');
+        Route::put('file/{fileId}','ProjectFileController@update');
+        Route::delete('file/{fileId}','ProjectFileController@destroy');
     });
     
     Route::get('user/authenticated','UserController@authenticated');

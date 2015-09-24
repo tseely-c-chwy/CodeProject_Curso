@@ -1,5 +1,5 @@
 var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.controllers','app.services',
-    'ui.bootstrap.typeahead','ui.bootstrap.tpls'
+    'ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls','ngFileUpload'
 ]);
 
 angular.module('app.filters',[]);
@@ -109,6 +109,26 @@ app.config([
         .when('/project/:id/notes/:idNote', {
             templateUrl: '/build/views/projectNote/show.html',
             controller: 'ProjectNoteShowController'
+        })
+        .when('/project/:id/files', {
+            templateUrl: '/build/views/projectFile/list.html',
+            controller: 'ProjectFileListController'
+        })
+        .when('/project/:id/files/new', {
+            templateUrl: '/build/views/projectFile/new.html',
+            controller: 'ProjectFileNewController'
+        })
+        .when('/project/:id/files/:idFile/edit', {
+            templateUrl: '/build/views/projectFile/edit.html',
+            controller: 'ProjectFileEditController'
+        })
+        .when('/project/:id/files/:idFile/remove', {
+            templateUrl: '/build/views/projectFile/remove.html',
+            controller: 'ProjectFileRemoveController'
+        })
+        .when('/project/:id/files/:idFile', {
+            templateUrl: '/build/views/projectFile/show.html',
+            controller: 'ProjectFileShowController'
         })
         .when('/home', {
             templateUrl: '/build/views/home.html',

@@ -11,6 +11,7 @@ namespace CodeProject\Repositories;
 use CodeProject\Entities\Client;
 use \Prettus\Repository\Eloquent\BaseRepository;
 use CodeProject\Presenters\ClientPresenter;
+use Prettus\Repository\Criteria\RequestCriteria;
 
 /**
  * Description of ClientRepositoryEloquent
@@ -45,6 +46,14 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
     
     public function presenter() {
         return ClientPresenter::class;
+    }
+    
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
+    {
+        $this->pushCriteria( app(RequestCriteria::class) );
     }
 
 }

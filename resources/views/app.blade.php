@@ -77,6 +77,7 @@
         <script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/vendor/ng-file-upload.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/app.js') }}" type="text/javascript"></script>
         
         <!-- Filters -->
@@ -98,12 +99,18 @@
         <script src="{{ asset('build/js/controllers/project/projectNew.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/project/projectEdit.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/project/projectRemove.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectFile/projectFileList.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectFile/projectFileNew.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectFile/projectFileEdit.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectFile/projectFileRemove.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectFile/projectFileShow.js') }}" type="text/javascript"></script>
         
         <!-- Services -->
         <script src="{{ asset('build/js/services/client.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/projectNote.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/user.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/project.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/services/projectFile.js') }}" type="text/javascript"></script>
     @else
         <script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>
     @endif
