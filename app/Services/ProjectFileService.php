@@ -1,12 +1,13 @@
 <?php
 
 namespace CodeProject\Services;
-use CodeProject\Repositories\ProjectFile;
+
+use CodeProject\Repositories\ProjectFileRepository;
 use CodeProject\Validators\ProjectFileValidator;
 use CodeProject\Repositories\ProjectRepository;
-use \Prettus\Validator\Exceptions\ValidatorException;
-use Illuminate\Filesystem\FilesystemManager;
-use Illuminate\Support\Facades\Storage;
+use Prettus\Validator\Exceptions\ValidatorException;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Factory as Storage;
 
 /**
  * Description of ProjectFileService
@@ -18,11 +19,11 @@ class ProjectFileService {
     protected $repository;
     protected $validator;
     protected $projectRepository;
-    protected $filesystem;
-    protected $storage;
+    private $filesystem;
+    private $storage;
     
-    public function __construct(ProjectFile $repository, ProjectFileValidator $validator,
-            ProjectRepository $projectRepository, FilesystemManager $filesystem,
+    public function __construct(ProjectFileRepository $repository, ProjectFileValidator $validator,
+            ProjectRepository $projectRepository, Filesystem $filesystem,
             Storage $storage) {
         $this->repository = $repository;
         $this->validator = $validator;
@@ -58,8 +59,9 @@ class ProjectFileService {
 
         $projectFile = $project->files()->create($data);
 
-        return (string)$this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
+        $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
         
+        return $projectFile;
     }
     
     public function find($id) {
