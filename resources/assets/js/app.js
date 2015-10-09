@@ -2,8 +2,9 @@ var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.co
     'ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls','ngFileUpload'
 ]);
 
-angular.module('app.filters',[]);
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
+angular.module('app.filters',[]);
+angular.module('app.directives',[]);
 angular.module('app.services',['ngResource']);
 
 app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider) {
@@ -119,7 +120,7 @@ app.config([
         })
         .when('/project/:id/files/new', {
             templateUrl: '/build/views/projectFile/new.html',
-            controller: 'ProjectFileNewController'
+            controller: 'ProjectFileListController'
         })
         .when('/project/:id/files/:idFile/edit', {
             templateUrl: '/build/views/projectFile/edit.html',
