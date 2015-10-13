@@ -33,14 +33,14 @@ class ProjectFileController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         if(empty($request->file('file'))) {
             return [
                 'error'     => true,
                 'message'   => 'Please select file to upload.',
             ];
-        }
+        }       
         
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -49,7 +49,7 @@ class ProjectFileController extends Controller
         $data['extension'] = $extension;
         $data['name'] = $request->name;
         $data['description'] = $request->description;
-        $data['project_id'] = $request->project_id;
+        $data['project_id'] = $id;
         
         return $this->service->createFile($data);
         
@@ -61,13 +61,13 @@ class ProjectFileController extends Controller
      * @param  int  $fileId
      * @return Response
      */
-    public function show($fileId)
+    public function show($id, $fileId)
     {   
-        return $this->service->find($fileId);
+        return $this->service->find($id, $fileId);
     }
     
-    public function showFile($fileId) {
-        return $this->service->showFile($fileId);
+    public function showFile($id, $fileId) {
+        return $this->service->showFile($id, $fileId);
     }
 
     /**
@@ -77,9 +77,11 @@ class ProjectFileController extends Controller
      * @param  int  $fileId
      * @return Response
      */
-    public function update(Request $request, $fileId)
+    public function update(Request $request, $id, $fileId)
     {   
-        return $this->service->update($request, $fileId);
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->update($data, $fileId);
     }
 
     /**
@@ -88,8 +90,8 @@ class ProjectFileController extends Controller
      * @param  int  $fileId
      * @return Response
      */
-    public function destroy($fileId)
+    public function destroy($id,$fileId)
     {
-        return $this->service->delete($fileId, $fileId);
+        return $this->service->delete($id, $fileId);
     }
 }

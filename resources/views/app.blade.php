@@ -106,7 +106,6 @@
         <script src="{{ asset('build/js/controllers/projectFile/projectFileNew.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectFile/projectFileEdit.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectFile/projectFileRemove.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('build/js/controllers/projectFile/projectFileShow.js') }}" type="text/javascript"></script>
         
         <!-- Services -->
         <script src="{{ asset('build/js/services/url.js') }}" type="text/javascript"></script>

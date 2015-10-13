@@ -5,7 +5,7 @@ namespace CodeProject\Http\Middleware;
 use Closure;
 use CodeProject\Services\ProjectService;
 
-class CheckProjectOwner
+class CheckProjectPermission
 {
     private $service;
     
@@ -24,7 +24,7 @@ class CheckProjectOwner
     {
         $projectId = $request->route('id') ? $request->route('id') : $request->route('project');
         
-        if(!$this->service->checkProjectOwner($projectId)) {
+        if(!$this->service->checkProjectPermissions($projectId)) {
             return ['error'=>'Access Forbidden'];
         }
         

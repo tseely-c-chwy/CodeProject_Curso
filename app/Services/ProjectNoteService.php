@@ -34,20 +34,20 @@ class ProjectNoteService {
         
     }
     
-    public function update($request, $id) {
+    public function update($data, $id) {
         
         try {
-            $this->validator->with($request->all())->passesOrFail();
+            $this->validator->with($data)->passesOrFail();
             
-            $projecyNote = $this->repository->skipPresenter()->find($id);
-            
-            $projecyNote->project_id = $request->get('project_id');
-            $projecyNote->title = $request->get('title');
-            $projecyNote->note = $request->get('note');
+            $projectNote = $this->repository->skipPresenter()->find($id);
 
-            $projecyNote->save();
+            $projectNote->project_id = $data['project_id'];
+            $projectNote->title = $data['title'];
+            $projectNote->note = $data['note'];
 
-            return $projecyNote;
+            $projectNote->save();
+
+            return $projectNote;
         } catch (ValidatorException $e) {
             return [
                 'error' => true,

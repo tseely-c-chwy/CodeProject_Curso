@@ -1,4 +1,4 @@
-var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.controllers','app.services',
+var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.controllers','app.services','app.directives',
     'ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls','ngFileUpload'
 ]);
 
@@ -120,7 +120,7 @@ app.config([
         })
         .when('/project/:id/files/new', {
             templateUrl: '/build/views/projectFile/new.html',
-            controller: 'ProjectFileListController'
+            controller: 'ProjectFileNewController'
         })
         .when('/project/:id/files/:idFile/edit', {
             templateUrl: '/build/views/projectFile/edit.html',
@@ -129,10 +129,6 @@ app.config([
         .when('/project/:id/files/:idFile/remove', {
             templateUrl: '/build/views/projectFile/remove.html',
             controller: 'ProjectFileRemoveController'
-        })
-        .when('/project/:id/files/:idFile', {
-            templateUrl: '/build/views/projectFile/show.html',
-            controller: 'ProjectFileShowController'
         })
         .when('/home', {
             templateUrl: '/build/views/home.html',

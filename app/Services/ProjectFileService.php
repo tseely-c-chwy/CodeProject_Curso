@@ -3,11 +3,13 @@
 namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectFileRepository;
+use CodeProject\Services\ProjectService;
 use CodeProject\Validators\ProjectFileValidator;
 use CodeProject\Repositories\ProjectRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
+use Prettus\Validator\Contracts\ValidatorInterface;
 
 /**
  * Description of ProjectFileService
@@ -19,17 +21,19 @@ class ProjectFileService {
     protected $repository;
     protected $validator;
     protected $projectRepository;
+    protected $projectService;
     private $filesystem;
     private $storage;
     
     public function __construct(ProjectFileRepository $repository, ProjectFileValidator $validator,
-            ProjectRepository $projectRepository, Filesystem $filesystem,
+            ProjectRepository $projectRepository, ProjectService $projectService, Filesystem $filesystem,
             Storage $storage) {
         $this->repository = $repository;
         $this->validator = $validator;
         $this->projectRepository = $projectRepository;
         $this->filesystem = $filesystem;
         $this->storage = $storage;
+        $this->projectService = $projectService;
     }
     
     public function createFile(array $data) {
@@ -59,25 +63,33 @@ class ProjectFileService {
 
         $projectFile = $project->files()->create($data);
 
-        $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
+        $this->storage->put($projectFile->getFileName(), $this->filesystem->get($data['file']));
         
         return $projectFile;
     }
     
-    public function find($id) {
-        if(!$this->checkProjectPermissions($id)) {
+    public function find($id, $fileId) {
+        if(!$this->projectService->checkProjectPermissions($id)) {
             return ['error' => 'Access Denied'];
         }
         
-        return $this->projectRepository->with(['owner','client'])->find($id);        
+        return $this->repository->find($fileId);        
     }
     
-    public function showFile($id) {
-        if(!$this->checkProjectPermissions($id)) {
+    public function showFile($id, $fileId) {
+        if(!$this->projectService->checkProjectPermissions($id)) {
             return ['error' => 'Access Denied'];
         }
         
-        return response()->download($this->getFilePath($id));
+        $filePath = $this->getFilePath($fileId);
+        $fileContent = file_get_contents($filePath);
+        $file64 = base64_encode($fileContent);
+        
+        return [
+            'file' => $file64,
+            'size' => filesize($filePath),
+            'name' => $this->getFileName($fileId),
+        ];
     }
     
     public function getFilePath($id) {
@@ -85,27 +97,32 @@ class ProjectFileService {
         return $this->getBaseURL($projectFile);
     }
     
+    public function getFileName($id) {
+        $projectFile = $this->repository->skipPresenter()->find($id);
+        return $projectFile->getFileName();
+    }
+    
     public function getBaseURL($projectFile) {
         switch($this->storage->getDefaultDriver()) {
             case 'local':
                 return $this->storage->getDriver()->getAdapter()->getPathPrefix()
-                    .'/'.$projectFile->id.'.'.$projectFile->extension;
+                    .'/'.$projectFile->getFileName();
         }
     }
     
-    public function update($request, $id) {
-        if(!$this->checkProjectOwner($id)) {
+    public function update($data, $id) {
+        if(!$this->projectService->checkProjectOwner($data['project_id'])) {
             return ['error' => 'Access Denied'];
         }
         
         try {
             
-            $this->validator->with($request->all())->passesOrFail();
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
             
-            $file = $this->projectRepository->skipPresenter()->find($id);
+            $file = $this->repository->skipPresenter()->find($id);
             
-            $file->name = $request->get('name');
-            $file->description = $request->get('description');
+            $file->name = $data['name'];
+            $file->description = $data['description'];
 
             $file->save();
 
@@ -120,7 +137,7 @@ class ProjectFileService {
     
     public function delete($id, $fileId) {
         
-        if(!$this->checkProjectOwner($id)) {
+        if(!$this->projectService->checkProjectOwner($id)) {
             return ['error' => 'Access Denied'];
         }
         
@@ -149,7 +166,9 @@ class ProjectFileService {
             if ($file->id == $fileId) {
                 $filename = $file->id.'.'.$file->extension;
                 $project->files()->where(['id' => $fileId])->delete();
-                $this->storage->delete($filename);
+                if ($this->storage->exists($filename)) {
+                    $this->storage->delete($filename);
+                }
                 return [
                     'error' => false,
                     'message' => 'File deleted.',
@@ -162,33 +181,6 @@ class ProjectFileService {
             'message' => 'File not found.',
         ]; 
         
-    }
-    
-    private function checkProjectOwner($projectFileId) {
-        
-        $userId = \Authorizer::getResourceOwnerId();
-        $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-        
-        return $this->projectRepository->isOwner($projectId, $userId);
-     
-    }
-    
-    private function checkProjectMember($projectFileId) {
-        
-        $userId = \Authorizer::getResourceOwnerId();
-        $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-        
-        return $this->projectRepository->hasMember($projectId, $userId);
-     
-    }
-    
-    private function checkProjectPermissions($projectFileId) {
-        
-        if ($this->checkProjectOwner($projectFileId) || $this->checkProjectMember($projectFileId)) {
-            return true;
-        }
-        
-        return false;
     }
     
 }

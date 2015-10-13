@@ -34,9 +34,11 @@ class ProjectTaskController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        return $this->service->create($request->all());
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->create($data);
     }
 
     /**
@@ -59,7 +61,9 @@ class ProjectTaskController extends Controller
      */
     public function update(Request $request, $id, $taskId)
     {
-        return $this->service->update($request, $taskId);
+        $data = $request->all();
+        $data['project_id'] = $id;
+        return $this->service->update($data, $taskId);
     }
 
     /**

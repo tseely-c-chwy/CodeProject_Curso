@@ -3,7 +3,9 @@ angular.module('app.controllers')
                 '$scope','$location','$routeParams', 'appConfig', 'Url', 'Upload',
                 function ($scope, $location, $routeParams, appConfig, Url, Upload) {
                     $scope.save = function() {
+                        console.log("Olá????");
                         if($scope.form.$valid) {
+                            console.log("AQUI!!!");
                             var url = appConfig.baseUrl + 
                                     Url.getUrlFromUrlSymbol(appConfig.urls.projectFile, {
                                         id: $routeParams.id,
