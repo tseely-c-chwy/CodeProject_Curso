@@ -34,18 +34,22 @@ class ProjectTaskService {
         
     }
     
-    public function update($request, $id) {
+    public function update($data, $id) {
         
         try {
-            $this->validator->with($request->all())->passesOrFail();
+            $this->validator->with($data)->passesOrFail();
             
-            $projectTask = $this->repository->find($id);
+            $projectTask = $this->repository->skipPresenter()->find($id);
             
-            $projectTask->project_id = $request->get('project_id');
-            $projectTask->name = $request->get('name');
-            $projectTask->start_date = $request->get('start_date');
-            $projectTask->due_date = $request->get('due_date');
-            $projectTask->status = $request->get('status');
+            $projectTask->project_id = $data['project_id'];
+            $projectTask->name = $data['name'];
+            if (isset($data['start_date'])) {
+                $projectTask->start_date = $data['start_date'];
+            }
+            if (isset($data['due_date'])) {
+                $projectTask->due_date = $data['due_date'];
+            }
+            $projectTask->status = $data['status'];
 
             $projectTask->save();
 

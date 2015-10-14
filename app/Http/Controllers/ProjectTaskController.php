@@ -49,7 +49,7 @@ class ProjectTaskController extends Controller
      */
     public function show($id, $taskId)
     {
-        return $this->repository->findWhere(['project_id' => $id, 'id' => $taskId]);
+        return $this->repository->skipPresenter()->find($taskId);
     }
 
     /**
@@ -74,6 +74,6 @@ class ProjectTaskController extends Controller
      */
     public function destroy($id, $taskId)
     {
-        $this->repository->find($taskId)->delete();
+        $this->repository->skipPresenter()->find($taskId)->delete();
     }
 }
