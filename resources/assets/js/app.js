@@ -156,7 +156,7 @@ app.config([
             templateUrl: '/build/views/projectMember/list.html',
             controller: 'ProjectMemberListController'
         })
-        .when('/project/:id/member/:idMember/remove', {
+        .when('/project/:id/member/:idProjectMember/remove', {
             templateUrl: '/build/views/projectMember/remove.html',
             controller: 'ProjectMemberRemoveController'
         })
