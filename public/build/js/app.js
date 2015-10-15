@@ -59,14 +59,25 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
 app.config([
     '$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider', 
     function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+    
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
     $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
+    $httpProvider.interceptors.push('oauthFixInterceptor');
+
     $routeProvider
         .when('/login', {
             templateUrl: '/build/views/login.html',
             controller: 'LoginController'
+        })
+        .when('/logout',  {
+            resolve: {
+                logout: ['$location','OAuthToken', function($location, OAuthToken) {
+                    OAuthToken.removeToken();
+                    return $location.path('login');
+                }]
+            }
         })
         .when('/projects', {
             templateUrl: '/build/views/project/list.html',
@@ -180,19 +191,41 @@ app.config([
         });    
 }]);
 
-app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
-    $rootScope.$on('oauth:error', function(event, rejection) {
+app.run(['$rootScope', '$location', '$http', 'OAuth', function($rootScope, $location, $http, OAuth) {
+    
+    $rootScope.$on('$routeChangeStart', function(event,next,current) {
+        if(next.$$route.originalPath != '/login') {
+            if(!OAuth.isAuthenticated()) {
+                $location.path('login');
+            }
+        }
+    });
+    
+    $rootScope.$on('oauth:error', function(event, data) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
-      if ('invalid_grant' === rejection.data.error) {
+      if ('invalid_grant' === data.rejection.data.error) {
         return;
       }
 
-      // Refresh token when a `invalid_token` error occurs.
-      if ('invalid_token' === rejection.data.error) {
-        return OAuth.getRefreshToken();
+      // Refresh token when a `access_denied` error occurs.
+      if ('access_denied' === data.rejection.data.error) {
+        if(!$rootScope.isRefreshingToken) {
+            $rootScope.isRefreshingToken = true;
+            return OAuth.getRefreshToken().then(function(response) {
+                $rootScope.isRefreshingToken = false;
+                $http(data.rejection.config).then(function(response) {
+                    return data.deferred.resolve(response);
+                });
+            });
+        }
+        else {
+            $http(data.rejection.config).then(function(response) {
+                return data.deferred.resolve(response);
+            });           
+        }
       }
 
       // Redirect to `/login` with the `error_reason`.
-      return $window.location.href = '/login?error_reason=' + rejection.data.error;
+      return $location.path('login');
     });
   }]);
