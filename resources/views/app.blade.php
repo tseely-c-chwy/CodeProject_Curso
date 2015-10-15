@@ -110,6 +110,8 @@
         <script src="{{ asset('build/js/controllers/projectTask/projectTaskNew.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectTask/projectTaskEdit.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/projectTask/projectTaskRemove.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectMember/projectMemberList.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/projectMember/projectMemberRemove.js') }}" type="text/javascript"></script>
         
         <!-- Services -->
         <script src="{{ asset('build/js/services/url.js') }}" type="text/javascript"></script>
@@ -119,6 +121,7 @@
         <script src="{{ asset('build/js/services/project.js') }}" type="text/javascript"></script> 
         <script src="{{ asset('build/js/services/projectFile.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/services/projectTask.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/services/projectMember.js') }}" type="text/javascript"></script>
     @else
         <script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>
     @endif

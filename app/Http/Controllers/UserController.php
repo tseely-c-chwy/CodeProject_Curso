@@ -4,7 +4,6 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Http\Requests;
 use CodeProject\Http\Controllers\Controller;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use CodeProject\Repositories\UserRepository;
@@ -30,18 +29,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+       return $this->repository->all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +52,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->repository->find($id);
     }
 
     /**

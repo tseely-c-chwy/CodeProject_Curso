@@ -152,6 +152,14 @@ app.config([
             templateUrl: '/build/views/projectTask/remove.html',
             controller: 'ProjectTaskRemoveController'
         })
+        .when('/project/:id/members', {
+            templateUrl: '/build/views/projectMember/list.html',
+            controller: 'ProjectMemberListController'
+        })
+        .when('/project/:id/member/:idMember/remove', {
+            templateUrl: '/build/views/projectMember/remove.html',
+            controller: 'ProjectMemberRemoveController'
+        })
         .when('/home', {
             templateUrl: '/build/views/home.html',
             controller: 'HomeController'

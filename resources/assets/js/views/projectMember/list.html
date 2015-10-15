@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Listagem de Project Members
+                    <div class="pull-right col-md-10">
+                        <form class="form-inline" name="form" role="form" method="POST" ng-submit="save()">
+                            <div class="form-group" ng-class="{'has-error' : !form.member_id.$valid && form.member_id.$touched}">
+                                <label class="col-md-4 control-label">Member</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="member_id" ng-model="userSelected" 
+                                           typeahead="user as user.name for user in getUsers($viewValue)|limitTo:10" 
+                                           typeahead-input-formatter="formatName($model)"
+                                           typeahead-on-select="selectUser($item)"
+                                           typeahead-editable="false"
+                                           required>
+                                    <div ng-messages="form.client.$error" class="help-block" ng-show="form.client.$touched">
+                                        <div ng-message="required">Campo Obrigatório</div>
+                                        <div ng-message="editable">Por favor digite um user válido</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">Adicionar Project Member</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br style="clear:both;"/>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="o in projectMembers">
+                                <td>{{o.user.data.name}}</td>
+                                <td><a ng-href="#/project/{{o.project_id}}/member/{{o.id}}/remove">Excluir</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
