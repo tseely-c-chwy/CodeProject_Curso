@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Laravel</title>
+	<title>Curso - Project Manager</title>
     
     @if(Config::get('app.debug'))
         <link href="{{ asset('build/css/app.css') }}" rel="stylesheet" type="text/css">
@@ -78,16 +78,20 @@
         <script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/vendor/ng-file-upload.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/vendor/http-auth-interceptor.js') }}" type="text/javascript"></script>
+        
         <script src="{{ asset('build/js/app.js') }}" type="text/javascript"></script>
         
         <!-- Directives -->
         <script src="{{ asset('build/js/directives/projectFileDownload.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/directives/loginForm.js') }}" type="text/javascript"></script>
         
         <!-- Filters -->
         <script src="{{ asset('build/js/filters/dateBr.js') }}" type="text/javascript"></script>
         
         <!-- Controllers -->
         <script src="{{ asset('build/js/controllers/login.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('build/js/controllers/loginModal.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/home.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/client/clientList.js') }}" type="text/javascript"></script>
         <script src="{{ asset('build/js/controllers/client/clientNew.js') }}" type="text/javascript"></script>

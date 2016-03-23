@@ -32,9 +32,10 @@ angular.module('app.services')
             && 0 === rejection.headers('www-authenticate').indexOf('Bearer'))
           ) {
             $rootScope.$emit('oauth:error', {rejection: rejection, deferred: deferred});
+            return deferred.promise;
           }
-
-          return deferred.promise;
+          
+          return $q.reject(rejection);
         }
       };
 }]);

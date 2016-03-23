@@ -495,12 +495,13 @@ e+" > 4096 bytes)!");k.cookie=d}}g.module("ngCookies",["ng"]).provider("$cookies
 
 /*! 7.0.17 */
 !window.XMLHttpRequest||window.FileAPI&&FileAPI.shouldLoad||(window.XMLHttpRequest.prototype.setRequestHeader=function(a){return function(b,c){if("__setXHR_"===b){var d=c(this);d instanceof Function&&d(this)}else a.apply(this,arguments)}}(window.XMLHttpRequest.prototype.setRequestHeader));var ngFileUpload=angular.module("ngFileUpload",[]);ngFileUpload.version="7.0.17",ngFileUpload.service("UploadBase",["$http","$q","$timeout",function(a,b,c){function d(d){d.method=d.method||"POST",d.headers=d.headers||{};var e=b.defer(),f=e.promise;return d.headers.__setXHR_=function(){return function(a){a&&(d.__XHR=a,d.xhrFn&&d.xhrFn(a),a.upload.addEventListener("progress",function(a){a.config=d,e.notify?e.notify(a):f.progressFunc&&c(function(){f.progressFunc(a)})},!1),a.upload.addEventListener("load",function(a){a.lengthComputable&&(a.config=d,e.notify?e.notify(a):f.progressFunc&&c(function(){f.progressFunc(a)}))},!1))}},a(d).then(function(a){e.resolve(a)},function(a){e.reject(a)},function(a){e.notify(a)}),f.success=function(a){return f.then(function(b){a(b.data,b.status,b.headers,d)}),f},f.error=function(a){return f.then(null,function(b){a(b.data,b.status,b.headers,d)}),f},f.progress=function(a){return f.progressFunc=a,f.then(null,null,function(b){a(b)}),f},f.abort=function(){return d.__XHR&&c(function(){d.__XHR.abort()}),f},f.xhr=function(a){return d.xhrFn=function(b){return function(){b&&b.apply(f,arguments),a.apply(f,arguments)}}(d.xhrFn),f},f}this.upload=function(a){function b(c,d,e){if(void 0!==d)if(angular.isDate(d)&&(d=d.toISOString()),angular.isString(d))c.append(e,d);else if("form"===a.sendFieldsAs)if(angular.isObject(d))for(var f in d)d.hasOwnProperty(f)&&b(c,d[f],e+"["+f+"]");else c.append(e,d);else d=angular.isString(d)?d:angular.toJson(d),"json-blob"===a.sendFieldsAs?c.append(e,new Blob([d],{type:"application/json"})):c.append(e,d)}return a.headers=a.headers||{},a.headers["Content-Type"]=void 0,a.transformRequest=a.transformRequest?angular.isArray(a.transformRequest)?a.transformRequest:[a.transformRequest]:[],a.transformRequest.push(function(c){var d,e=new FormData,f={};for(d in a.fields)a.fields.hasOwnProperty(d)&&(f[d]=a.fields[d]);c&&(f.data=c);for(d in f)if(f.hasOwnProperty(d)){var g=f[d];a.formDataAppender?a.formDataAppender(e,d,g):b(e,g,d)}if(null!=a.file){var h=a.fileFormDataName||"file";if(angular.isArray(a.file))for(var i=angular.isString(h),j=0;j<a.file.length;j++)e.append(i?h:h[j],a.file[j],a.fileName&&a.fileName[j]||a.file[j].name);else e.append(h,a.file,a.fileName||a.file.name)}return e}),d(a)},this.http=function(b){return b.transformRequest=b.transformRequest||function(b){return window.ArrayBuffer&&b instanceof window.ArrayBuffer||b instanceof Blob?b:a.defaults.transformRequest[0].apply(this,arguments)},d(b)},this.setDefaults=function(a){this.defaults=a||{}},this.defaults={},this.version=ngFileUpload.version}]),function(){ngFileUpload.service("Upload",["$parse","$timeout","$compile","UploadValidate",function(a,b,c,d){var e=d;return e.getAttrWithDefaults=function(a,b){return null!=a[b]?a[b]:null==e.defaults[b]?e.defaults[b]:e.defaults[b].toString()},e.attrGetter=function(b,c,d,e){if(!d)return this.getAttrWithDefaults(c,b);try{return e?a(this.getAttrWithDefaults(c,b))(d,e):a(this.getAttrWithDefaults(c,b))(d)}catch(f){if(b.search(/min|max|pattern/i))return this.getAttrWithDefaults(c,b);throw f}},e.updateModel=function(c,d,f,g,h,i,j){function k(){var j=h&&h.length?h[0]:null;if(c){var k=!e.attrGetter("ngfMultiple",d,f)&&!e.attrGetter("multiple",d)&&!l;a(e.attrGetter("ngModel",d)).assign(f,k?j:h)}var m=e.attrGetter("ngfModel",d);m&&a(m).assign(f,h),g&&a(g)(f,{$files:h,$file:j,$event:i}),b(function(){})}var l=e.attrGetter("ngfKeep",d,f);if(l===!0){if(!h||!h.length)return;var m=(c&&c.$modelValue||d.$$ngfPrevFiles||[]).slice(0),n=!1;if(e.attrGetter("ngfKeepDistinct",d,f)===!0){for(var o=m.length,p=0;p<h.length;p++){for(var q=0;o>q&&h[p].name!==m[q].name;q++);q===o&&(m.push(h[p]),n=!0)}if(!n)return;h=m}else h=m.concat(h)}d.$$ngfPrevFiles=h,j?k():e.validate(h,c,d,f,e.attrGetter("ngfValidateLater",d),function(){b(function(){k()})})},e}])}(),function(){function a(a,c,d,e,f,g,h,i){function j(){return"input"===c[0].tagName.toLowerCase()&&d.type&&"file"===d.type.toLowerCase()}function k(){return t("ngfChange")||t("ngfSelect")}function l(b){for(var c=b.__files_||b.target&&b.target.files,f=[],g=0;g<c.length;g++)f.push(c[g]);i.updateModel(e,d,a,k(),f.length?f:null,b)}function m(a){if(c!==a)for(var b=0;b<c[0].attributes.length;b++){var d=c[0].attributes[b];"type"!==d.name&&"class"!==d.name&&"id"!==d.name&&"style"!==d.name&&((null==d.value||""===d.value)&&("required"===d.name&&(d.value="required"),"multiple"===d.name&&(d.value="multiple")),a.attr(d.name,d.value))}}function n(){if(j())return c;var a=angular.element('<input type="file">');return m(a),a.css("visibility","hidden").css("position","absolute").css("overflow","hidden").css("width","0px").css("height","0px").css("border","none").css("margin","0px").css("padding","0px").attr("tabindex","-1"),b.push({el:c,ref:a}),document.body.appendChild(a[0]),a}function o(b){if(c.attr("disabled")||t("ngfSelectDisabled",a))return!1;var d=p(b);return null!=d?d:(r(b),q(navigator.userAgent)?setTimeout(function(){w[0].click()},0):w[0].click(),!1)}function p(a){var b=a.changedTouches||a.originalEvent&&a.originalEvent.changedTouches;if("touchstart"===a.type)return v=b?b[0].clientY:0,!0;if(a.stopPropagation(),a.preventDefault(),"touchend"===a.type){var c=b?b[0].clientY:0;if(Math.abs(c-v)>20)return!1}}function q(a){var b=a.match(/Android[^\d]*(\d+)\.(\d+)/);if(b&&b.length>2){var c=i.defaults.androidFixMinorVersion||4;return parseInt(b[1])<4||parseInt(b[1])===c&&parseInt(b[2])<c}return-1===a.indexOf("Chrome")&&/.*Windows.*Safari.*/.test(a)}function r(b){w.val()&&(w.val(null),i.updateModel(e,d,a,k(),null,b,!0))}function s(a){if(w&&!w.attr("__ngf_ie10_Fix_")){if(!w[0].parentNode)return void(w=null);a.preventDefault(),a.stopPropagation(),w.unbind("click");var b=w.clone();return w.replaceWith(b),w=b,w.attr("__ngf_ie10_Fix_","true"),w.bind("change",l),w.bind("click",s),w[0].click(),!1}w.removeAttr("__ngf_ie10_Fix_")}var t=function(a,b){return i.attrGetter(a,d,b)},u=[];u.push(a.$watch(t("ngfMultiple"),function(){w.attr("multiple",t("ngfMultiple",a))})),u.push(a.$watch(t("ngfCapture"),function(){w.attr("capture",t("ngfCapture",a))})),d.$observe("accept",function(){w.attr("accept",t("accept"))}),u.push(function(){d.$$observers&&delete d.$$observers.accept});var v=0,w=c;j()||(w=n()),w.bind("change",l),j()?c.bind("click",r):c.bind("click touchstart touchend",o),i.registerValidators(e,w,d,a),-1!==navigator.appVersion.indexOf("MSIE 10")&&w.bind("click",s),a.$on("$destroy",function(){j()||w.remove(),angular.forEach(u,function(a){a()})}),g(function(){for(var a=0;a<b.length;a++){var c=b[a];document.body.contains(c.el[0])||(b.splice(a,1),c.ref.remove())}}),window.FileAPI&&window.FileAPI.ngfFixIE&&window.FileAPI.ngfFixIE(c,w,l)}var b=[];ngFileUpload.directive("ngfSelect",["$parse","$timeout","$compile","Upload",function(b,c,d,e){return{restrict:"AEC",require:"?ngModel",link:function(f,g,h,i){a(f,g,h,i,b,c,d,e)}}}])}(),function(){function a(a){return"img"===a.tagName.toLowerCase()?"image":"audio"===a.tagName.toLowerCase()?"audio":"video"===a.tagName.toLowerCase()?"video":/\./}ngFileUpload.service("UploadDataUrl",["UploadBase","$timeout","$q",function(a,b,c){var d=a;return d.dataUrl=function(a,d){if(d&&null!=a.dataUrl||!d&&null!=a.blobUrl){var e=c.defer();return b(function(){e.resolve(d?a.dataUrl:a.blobUrl)}),e.promise}var f=d?a.$ngfDataUrlPromise:a.$ngfBlobUrlPromise;if(f)return f;var g=c.defer();return b(function(){if(window.FileReader&&a&&(!window.FileAPI||-1===navigator.userAgent.indexOf("MSIE 8")||a.size<2e4)&&(!window.FileAPI||-1===navigator.userAgent.indexOf("MSIE 9")||a.size<4e6)){var c=window.URL||window.webkitURL;if(c&&c.createObjectURL&&!d){var e;try{e=c.createObjectURL(a)}catch(f){return void b(function(){a.blobUrl="",g.reject()})}b(function(){a.blobUrl=e,e&&g.resolve(e)})}else{var h=new FileReader;h.onload=function(c){b(function(){a.dataUrl=c.target.result,g.resolve(c.target.result)})},h.onerror=function(){b(function(){a.dataUrl="",g.reject()})},h.readAsDataURL(a)}}else b(function(){a[d?"dataUrl":"blobUrl"]="",g.reject()})}),f=d?a.$ngfDataUrlPromise=g.promise:a.$ngfBlobUrlPromise=g.promise,f["finally"](function(){delete a[d?"$ngfDataUrlPromise":"$ngfBlobUrlPromise"]}),f},d}]);var b=angular.element("<style>.ngf-hide{display:none !important}</style>");document.getElementsByTagName("head")[0].appendChild(b[0]),ngFileUpload.directive("ngfSrc",["$compile","$timeout","Upload",function(b,c,d){return{restrict:"AE",link:function(b,e,f){c(function(){var g=b.$watch(f.ngfSrc,function(g){if(angular.isString(g))return e.removeClass("ngf-hide"),e.attr("src",g);if(g&&g.type&&0===g.type.indexOf(a(e[0]))){var h=d.attrGetter("ngfNoObjectUrl",f,b);d.dataUrl(g,h)["finally"](function(){c(function(){h&&g.dataUrl||!h&&g.blobUrl?(e.removeClass("ngf-hide"),e.attr("src",h?g.dataUrl:g.blobUrl)):e.addClass("ngf-hide")})})}else e.addClass("ngf-hide")});b.$on("$destroy",function(){g()})})}}}]),ngFileUpload.directive("ngfBackground",["Upload","$compile","$timeout",function(a,b,c){return{restrict:"AE",link:function(b,d,e){c(function(){var f=b.$watch(e.ngfBackground,function(f){if(angular.isString(f))return d.css("background-image","url('"+f+"')");if(f&&f.type&&0===f.type.indexOf("image")){var g=a.attrGetter("ngfNoObjectUrl",e,b);a.dataUrl(f,g)["finally"](function(){c(function(){g&&f.dataUrl||!g&&f.blobUrl?d.css("background-image","url('"+(g?f.dataUrl:f.blobUrl)+"')"):d.css("background-image","")})})}else d.css("background-image","")});b.$on("$destroy",function(){f()})})}}}]),ngFileUpload.config(["$compileProvider",function(a){a.imgSrcSanitizationWhitelist&&a.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|local|file|data|blob):/),a.aHrefSanitizationWhitelist&&a.aHrefSanitizationWhitelist(/^\s*(https?|ftp|local|file|data|blob):/)}]),ngFileUpload.filter("ngfDataUrl",["UploadDataUrl","$sce",function(a,b){return function(c,d){return angular.isString(c)?b.trustAsResourceUrl(c):c&&!c.dataUrl?(void 0===c.dataUrl&&angular.isObject(c)&&(c.dataUrl=null,a.dataUrl(c,d)),""):(c&&c.dataUrl?b.trustAsResourceUrl(c.dataUrl):c)||""}}])}(),function(){function a(b){if(b.length>2&&"/"===b[0]&&"/"===b[b.length-1])return b.substring(1,b.length-1);var c=b.split(","),d="";if(c.length>1)for(var e=0;e<c.length;e++)d+="("+a(c[e])+")",e<c.length-1&&(d+="|");else 0===b.indexOf(".")&&(b="*"+b),d="^"+b.replace(new RegExp("[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\-]","g"),"\\$&")+"$",d=d.replace(/\\\*/g,".*").replace(/\\\?/g,".");return d}function b(a){if(angular.isString(a)){if(a.search(/kb/i)===a.length-2)return parseFloat(1e3*a.substring(0,a.length-2));if(a.search(/mb/i)===a.length-2)return parseFloat(1e6*a.substring(0,a.length-2));if(a.search(/gb/i)===a.length-2)return parseFloat(1e9*a.substring(0,a.length-2));if(a.search(/b/i)===a.length-1)return parseFloat(a.substring(0,a.length-1));if(a.search(/s/i)===a.length-1)return parseFloat(a.substring(0,a.length-1));if(a.search(/m/i)===a.length-1)return parseFloat(60*a.substring(0,a.length-1));if(a.search(/h/i)===a.length-1)return parseFloat(3600*a.substring(0,a.length-1))}return a}ngFileUpload.service("UploadValidate",["UploadDataUrl","$q","$timeout",function(c,d,e){var f=c;return f.registerValidators=function(a,b,c,d){function e(a){angular.forEach(a.$ngfValidations,function(b){a.$setValidity(b.name,b.valid)})}a&&(a.$ngfValidations=[],a.$formatters.push(function(g){return f.attrGetter("ngfValidateLater",c,d)||!a.$$ngfValidated?(f.validate(g,a,c,d,!1,function(){e(a),a.$$ngfValidated=!1}),g&&0===g.length&&(g=null),!b||null!=g&&0!==g.length||b.val()&&b.val(null)):(e(a),a.$$ngfValidated=!1),g}))},f.validatePattern=function(b,c){if(!c)return!0;var d=new RegExp(a(c),"gi");return null!=b.type&&d.test(b.type.toLowerCase())||null!=b.name&&d.test(b.name.toLowerCase())},f.validate=function(a,c,d,e,g,h){function i(b,d,e){if(a){for(var f="ngf"+b[0].toUpperCase()+b.substr(1),g=a.length,h=null;g--;){var i=a[g],j=k(f,{$file:i});null==j&&(j=d(k("ngfValidate")||{}),h=null==h?!0:h),null!=j&&(e(i,j)||(i.$error=b,i.$errorParam=j,a.splice(g,1),h=!1))}null!==h&&c.$ngfValidations.push({name:b,valid:h})}}function j(b,d,e,f,g){if(a){var i=0,j=!1,m="ngf"+b[0].toUpperCase()+b.substr(1);a=void 0===a.length?[a]:a,angular.forEach(a,function(a){if(0!==a.type.search(e))return!0;var n=k(m,{$file:a})||d(k("ngfValidate",{$file:a})||{});n&&(l++,i++,f(a,n).then(function(c){g(c,n)||(a.$error=b,a.$errorParam=n,j=!0)},function(){k("ngfValidateForce",{$file:a})&&(a.$error=b,a.$errorParam=n,j=!0)})["finally"](function(){l--,i--,i||c.$ngfValidations.push({name:b,valid:!j}),l||h.call(c,c.$ngfValidations)}))})}}c=c||{},c.$ngfValidations=c.$ngfValidations||[],angular.forEach(c.$ngfValidations,function(a){a.valid=!0});var k=function(a,b){return f.attrGetter(a,d,e,b)};if(g)return void h.call(c);if(c.$$ngfValidated=!0,null==a||0===a.length)return void h.call(c);if(a=void 0===a.length?[a]:a.slice(0),i("pattern",function(a){return a.pattern},f.validatePattern),i("minSize",function(a){return a.size&&a.size.min},function(a,c){return a.size>=b(c)}),i("maxSize",function(a){return a.size&&a.size.max},function(a,c){return a.size<=b(c)}),i("validateFn",function(){return null},function(a,b){return b===!0||null===b||""===b}),!a.length)return void h.call(c,c.$ngfValidations);var l=0;j("maxHeight",function(a){return a.height&&a.height.max},/image/,this.imageDimensions,function(a,b){return a.height<=b}),j("minHeight",function(a){return a.height&&a.height.min},/image/,this.imageDimensions,function(a,b){return a.height>=b}),j("maxWidth",function(a){return a.width&&a.width.max},/image/,this.imageDimensions,function(a,b){return a.width<=b}),j("minWidth",function(a){return a.width&&a.width.min},/image/,this.imageDimensions,function(a,b){return a.width>=b}),j("ratio",function(a){return a.ratio},/image/,this.imageDimensions,function(a,b){for(var c=b.toString().split(","),d=!1,e=0;e<c.length;e++){var f=c[e],g=f.search(/x/i);f=g>-1?parseFloat(f.substring(0,g))/parseFloat(f.substring(g+1)):parseFloat(f),Math.abs(a.width/a.height-f)<1e-4&&(d=!0)}return d}),j("maxDuration",function(a){return a.duration&&a.duration.max},/audio|video/,this.mediaDuration,function(a,c){return a<=b(c)}),j("minDuration",function(a){return a.duration&&a.duration.min},/audio|video/,this.mediaDuration,function(a,c){return a>=b(c)}),j("validateAsyncFn",function(){return null},/./,function(a,b){return b},function(a){return a===!0||null===a||""===a}),l||h.call(c,c.$ngfValidations)},f.imageDimensions=function(a){if(a.width&&a.height){var b=d.defer();return e(function(){b.resolve({width:a.width,height:a.height})}),b.promise}if(a.$ngfDimensionPromise)return a.$ngfDimensionPromise;var c=d.defer();return e(function(){return 0!==a.type.indexOf("image")?void c.reject("not image"):void f.dataUrl(a).then(function(b){function d(){var b=h[0].clientWidth,d=h[0].clientHeight;h.remove(),a.width=b,a.height=d,c.resolve({width:b,height:d})}function f(){h.remove(),c.reject("load error")}function g(){e(function(){h[0].parentNode&&(h[0].clientWidth?d():i>10?f():g())},1e3)}var h=angular.element("<img>").attr("src",b).css("visibility","hidden").css("position","fixed");h.on("load",d),h.on("error",f);var i=0;g(),angular.element(document.getElementsByTagName("body")[0]).append(h)},function(){c.reject("load error")})}),a.$ngfDimensionPromise=c.promise,a.$ngfDimensionPromise["finally"](function(){delete a.$ngfDimensionPromise}),a.$ngfDimensionPromise},f.mediaDuration=function(a){if(a.duration){var b=d.defer();return e(function(){b.resolve(a.duration)}),b.promise}if(a.$ngfDurationPromise)return a.$ngfDurationPromise;var c=d.defer();return e(function(){return 0!==a.type.indexOf("audio")&&0!==a.type.indexOf("video")?void c.reject("not media"):void f.dataUrl(a).then(function(b){function d(){var b=h[0].duration;a.duration=b,h.remove(),c.resolve(b)}function f(){h.remove(),c.reject("load error")}function g(){e(function(){h[0].parentNode&&(h[0].duration?d():i>10?f():g())},1e3)}var h=angular.element(0===a.type.indexOf("audio")?"<audio>":"<video>").attr("src",b).css("visibility","none").css("position","fixed");h.on("loadedmetadata",d),h.on("error",f);var i=0;g(),angular.element(document.body).append(h)},function(){c.reject("load error")})}),a.$ngfDurationPromise=c.promise,a.$ngfDurationPromise["finally"](function(){delete a.$ngfDurationPromise}),a.$ngfDurationPromise},f}])}(),function(){function a(a,c,d,e,f,g,h,i){function j(){return c.attr("disabled")||n("ngfDropDisabled",a)}function k(a,b,c,d){var e=n("ngfDragOverClass",a,{$event:c}),f=n("ngfDragOverClass")||"dragover";if(angular.isString(e))return void d(e);if(e&&(e.delay&&(r=e.delay),e.accept||e.reject)){var g=c.dataTransfer.items;if(null!=g)for(var h=n("ngfPattern",a,{$event:c}),j=0;j<g.length;j++)if("file"===g[j].kind||""===g[j].kind){if(!i.validatePattern(g[j],h)){f=e.reject;break}f=e.accept}}d(f)}function l(a,b,c,d){function e(a,b,c){if(null!=b)if(b.isDirectory){var d=(c||"")+b.name;a.push({name:b.name,type:"directory",path:d});var f=b.createReader(),g=[];i++;var h=function(){f.readEntries(function(d){try{if(d.length)g=g.concat(Array.prototype.slice.call(d||[],0)),h();else{for(var f=0;f<g.length;f++)e(a,g[f],(c?c:"")+b.name+"/");i--}}catch(j){i--,console.error(j)}},function(){i--})};h()}else i++,b.file(function(b){try{i--,b.path=(c?c:"")+b.name,a.push(b)}catch(d){i--,console.error(d)}},function(){i--})}var f=[],i=0,j=a.dataTransfer.items;if(j&&j.length>0&&"file"!==h.protocol())for(var k=0;k<j.length;k++){if(j[k].webkitGetAsEntry&&j[k].webkitGetAsEntry()&&j[k].webkitGetAsEntry().isDirectory){var l=j[k].webkitGetAsEntry();if(l.isDirectory&&!c)continue;null!=l&&e(f,l)}else{var m=j[k].getAsFile();null!=m&&f.push(m)}if(!d&&f.length>0)break}else{var n=a.dataTransfer.files;if(null!=n)for(var o=0;o<n.length&&(f.push(n.item(o)),d||!(f.length>0));o++);}var p=0;!function q(a){g(function(){if(i)10*p++<2e4&&q(10);else{if(!d&&f.length>1){for(k=0;"directory"===f[k].type;)k++;f=[f[k]]}b(f)}},a||0)}()}var m=b(),n=function(a,b,c){return i.attrGetter(a,d,b,c)};if(n("dropAvailable")&&g(function(){a[n("dropAvailable")]?a[n("dropAvailable")].value=m:a[n("dropAvailable")]=m}),!m)return void(n("ngfHideOnDropNotAvailable",a)===!0&&c.css("display","none"));i.registerValidators(e,null,d,a);var o,p=null,q=f(n("ngfStopPropagation")),r=1;c[0].addEventListener("dragover",function(b){if(!j()){if(b.preventDefault(),q(a)&&b.stopPropagation(),navigator.userAgent.indexOf("Chrome")>-1){var e=b.dataTransfer.effectAllowed;b.dataTransfer.dropEffect="move"===e||"linkMove"===e?"move":"copy"}g.cancel(p),o||(o="C",k(a,d,b,function(a){o=a,c.addClass(o)}))}},!1),c[0].addEventListener("dragenter",function(b){j()||(b.preventDefault(),q(a)&&b.stopPropagation())},!1),c[0].addEventListener("dragleave",function(){j()||(p=g(function(){c.removeClass(o),o=null},r||1))},!1),c[0].addEventListener("drop",function(b){j()||(b.preventDefault(),q(a)&&b.stopPropagation(),c.removeClass(o),o=null,l(b,function(c){i.updateModel(e,d,a,n("ngfChange")||n("ngfDrop"),c,b)},n("ngfAllowDir",a)!==!1,n("multiple")||n("ngfMultiple",a)))},!1),c[0].addEventListener("paste",function(b){if(!j()){var c=[],f=b.clipboardData||b.originalEvent.clipboardData;if(f&&f.items){for(var g=0;g<f.items.length;g++)-1!==f.items[g].type.indexOf("image")&&c.push(f.items[g].getAsFile());i.updateModel(e,d,a,n("ngfChange")||n("ngfDrop"),c,b)}}},!1)}function b(){var a=document.createElement("div");return"draggable"in a&&"ondrop"in a&&!/Edge\/12./i.test(navigator.userAgent)}ngFileUpload.directive("ngfDrop",["$parse","$timeout","$location","Upload",function(b,c,d,e){return{restrict:"AEC",require:"?ngModel",link:function(f,g,h,i){a(f,g,h,i,b,c,d,e)}}}]),ngFileUpload.directive("ngfNoFileDrop",function(){return function(a,c){b()&&c.css("display","none")}}),ngFileUpload.directive("ngfDropAvailable",["$parse","$timeout","Upload",function(a,c,d){return function(e,f,g){if(b()){var h=a(d.attrGetter("ngfDropAvailable",g));c(function(){h(e),h.assign&&h.assign(e,!0)})}}}])}();
-var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.controllers','app.services',
+var app = angular.module('app',['ngRoute','angular-oauth2','app.filters','app.controllers','app.services','app.directives',
     'ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls','ngFileUpload'
 ]);
 
-angular.module('app.filters',[]);
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
+angular.module('app.filters',[]);
+angular.module('app.directives',[]);
 angular.module('app.services',['ngResource']);
 
 app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider) {
@@ -512,6 +513,15 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
                 {value: 2, label: 'Iniciado'},
                 {value: 3, label: 'Concluído'}
             ]
+        },
+        projectTask: {
+            status: [
+                {value: 1, label: 'Incompleta'},
+                {value: 2, label: 'Completa'},
+            ]
+        },
+        urls: {
+            projectFile: '/project/{{id}}/file/{{idFile}}'
         },
         utils: {
             transformRequest: function(data) {
@@ -546,28 +556,39 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function($httpParamSe
 app.config([
     '$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider', 
     function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider) {
+    
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
     $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformRequest;
+    $httpProvider.interceptors.push('oauthFixInterceptor');
+
     $routeProvider
         .when('/login', {
             templateUrl: '/build/views/login.html',
             controller: 'LoginController'
         })
+        .when('/logout',  {
+            resolve: {
+                logout: ['$location','OAuthToken', function($location, OAuthToken) {
+                    OAuthToken.removeToken();
+                    return $location.path('login');
+                }]
+            }
+        })
         .when('/projects', {
             templateUrl: '/build/views/project/list.html',
             controller: 'ProjectListController'
         })
-        .when('/projects/new', {
+        .when('/project/new', {
             templateUrl: '/build/views/project/new.html',
             controller: 'ProjectNewController'
         })
-        .when('/projects/:id/edit', {
+        .when('/project/:id/edit', {
             templateUrl: '/build/views/project/edit.html',
             controller: 'ProjectEditController'
         })
-        .when('/projects/:id/remove', {
+        .when('/project/:id/remove', {
             templateUrl: '/build/views/project/remove.html',
             controller: 'ProjectRemoveController'
         })
@@ -575,15 +596,15 @@ app.config([
             templateUrl: '/build/views/client/list.html',
             controller: 'ClientListController'
         })
-        .when('/clients/new', {
+        .when('/client/new', {
             templateUrl: '/build/views/client/new.html',
             controller: 'ClientNewController'
         })
-        .when('/clients/:id/edit', {
+        .when('/client/:id/edit', {
             templateUrl: '/build/views/client/edit.html',
             controller: 'ClientEditController'
         })
-        .when('/clients/:id/remove', {
+        .when('/client/:id/remove', {
             templateUrl: '/build/views/client/remove.html',
             controller: 'ClientRemoveController'
         })
@@ -591,19 +612,19 @@ app.config([
             templateUrl: '/build/views/projectNote/list.html',
             controller: 'ProjectNoteListController'
         })
-        .when('/project/:id/notes/new', {
+        .when('/project/:id/note/new', {
             templateUrl: '/build/views/projectNote/new.html',
             controller: 'ProjectNoteNewController'
         })
-        .when('/project/:id/notes/:idNote/edit', {
+        .when('/project/:id/note/:idNote/edit', {
             templateUrl: '/build/views/projectNote/edit.html',
             controller: 'ProjectNoteEditController'
         })
-        .when('/project/:id/notes/:idNote/remove', {
+        .when('/project/:id/note/:idNote/remove', {
             templateUrl: '/build/views/projectNote/remove.html',
             controller: 'ProjectNoteRemoveController'
         })
-        .when('/project/:id/notes/:idNote', {
+        .when('/project/:id/note/:idNote', {
             templateUrl: '/build/views/projectNote/show.html',
             controller: 'ProjectNoteShowController'
         })
@@ -611,21 +632,41 @@ app.config([
             templateUrl: '/build/views/projectFile/list.html',
             controller: 'ProjectFileListController'
         })
-        .when('/project/:id/files/new', {
+        .when('/project/:id/file/new', {
             templateUrl: '/build/views/projectFile/new.html',
             controller: 'ProjectFileNewController'
         })
-        .when('/project/:id/files/:idFile/edit', {
+        .when('/project/:id/file/:idFile/edit', {
             templateUrl: '/build/views/projectFile/edit.html',
             controller: 'ProjectFileEditController'
         })
-        .when('/project/:id/files/:idFile/remove', {
+        .when('/project/:id/file/:idFile/remove', {
             templateUrl: '/build/views/projectFile/remove.html',
             controller: 'ProjectFileRemoveController'
         })
-        .when('/project/:id/files/:idFile', {
-            templateUrl: '/build/views/projectFile/show.html',
-            controller: 'ProjectFileShowController'
+        .when('/project/:id/tasks', {
+            templateUrl: '/build/views/projectTask/list.html',
+            controller: 'ProjectTaskListController'
+        })
+        .when('/project/:id/task/new', {
+            templateUrl: '/build/views/projectTask/new.html',
+            controller: 'ProjectTaskNewController'
+        })
+        .when('/project/:id/task/:idTask/edit', {
+            templateUrl: '/build/views/projectTask/edit.html',
+            controller: 'ProjectTaskEditController'
+        })
+        .when('/project/:id/task/:idTask/remove', {
+            templateUrl: '/build/views/projectTask/remove.html',
+            controller: 'ProjectTaskRemoveController'
+        })
+        .when('/project/:id/members', {
+            templateUrl: '/build/views/projectMember/list.html',
+            controller: 'ProjectMemberListController'
+        })
+        .when('/project/:id/member/:idProjectMember/remove', {
+            templateUrl: '/build/views/projectMember/remove.html',
+            controller: 'ProjectMemberRemoveController'
         })
         .when('/home', {
             templateUrl: '/build/views/home.html',
@@ -647,20 +688,42 @@ app.config([
         });    
 }]);
 
-app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
-    $rootScope.$on('oauth:error', function(event, rejection) {
+app.run(['$rootScope', '$location', '$http', 'OAuth', function($rootScope, $location, $http, OAuth) {
+    
+    $rootScope.$on('$routeChangeStart', function(event,next,current) {
+        if(next.$$route.originalPath != '/login') {
+            if(!OAuth.isAuthenticated()) {
+                $location.path('login');
+            }
+        }
+    });
+    
+    $rootScope.$on('oauth:error', function(event, data) {
       // Ignore `invalid_grant` error - should be catched on `LoginController`.
-      if ('invalid_grant' === rejection.data.error) {
+      if ('invalid_grant' === data.rejection.data.error) {
         return;
       }
 
-      // Refresh token when a `invalid_token` error occurs.
-      if ('invalid_token' === rejection.data.error) {
-        return OAuth.getRefreshToken();
+      // Refresh token when a `access_denied` error occurs.
+      if ('access_denied' === data.rejection.data.error) {
+        if(!$rootScope.isRefreshingToken) {
+            $rootScope.isRefreshingToken = true;
+            return OAuth.getRefreshToken().then(function(response) {
+                $rootScope.isRefreshingToken = false;
+                $http(data.rejection.config).then(function(response) {
+                    return data.deferred.resolve(response);
+                });
+            });
+        }
+        else {
+            $http(data.rejection.config).then(function(response) {
+                return data.deferred.resolve(response);
+            });           
+        }
       }
 
       // Redirect to `/login` with the `error_reason`.
-      return $window.location.href = '/login?error_reason=' + rejection.data.error;
+      return $location.path('login');
     });
   }]);
 angular.module('app.controllers')
@@ -694,6 +757,45 @@ angular.module('app.controllers')
                     }
                 };
         }]);
+angular.module('app.directives')
+        .directive('projectFileDownload',
+        ['$timeout', 'appConfig', 'ProjectFile',
+        function($timeout, appConfig, ProjectFile) {
+        return {
+                restrict: 'E',
+                templateUrl: appConfig.baseUrl + '/build/views/templates/projectFileDownload.html',
+                link: function(scope, element, attr) {
+                    var anchor = element.children()[0];
+                    scope.$on('start-download', function(event) {
+                        $(anchor).addClass('disabled');
+                        $(anchor).text('Caregando Arquivo...');                        
+                    });
+                    scope.$on('save-file', function(event, data) {
+                        $(anchor).removeClass('disable');
+                        $(anchor).text('Save File');
+                        $(anchor).attr({
+                            href: 'data:application-octet-stream;base64,' + data.file,
+                            download: data.name
+                        });
+                        $timeout(function() {
+                            scope.downloadFile = function() {
+
+                            };
+                            $(anchor)[0].click();
+                        });                        
+                    });
+                },
+                controller: ['$scope', '$element', '$attrs',
+                    function($scope, $element, $attrs) {
+                    $scope.downloadFile = function() {
+                        $scope.$emit('start-download');
+                        ProjectFile.download({id:$attrs.idProject,idFile:$attrs.idFile}, function(data) {
+                            $scope.$emit('save-file', data);
+                        });
+                    };
+                }]
+            };
+}]);
 angular.module('app.filters').filter('dateBr',['$filter', function($filter) {
     return function(input) {
         return $filter('date')(input,'dd/MM/yyyy');
@@ -705,6 +807,46 @@ angular.module('app.services').service('Client',['$resource','appConfig',functio
                 method: 'PUT'
             }
         });
+}]);
+angular.module('app.services')
+    .service('oauthFixInterceptor',
+    ['$q','$rootScope','OAuthToken',
+    function ($q, $rootScope, OAuthToken) {
+      return {
+        request: function(config) {
+          // Inject `Authorization` header.
+          if (OAuthToken.getAuthorizationHeader()) {
+            config.headers = config.headers || {};
+            config.headers.Authorization = OAuthToken.getAuthorizationHeader();
+          }
+
+          return config;
+        },
+        responseError: function(rejection) {
+          var deferred = $q.defer();  
+          // Catch `invalid_request` and `invalid_grant` errors and ensure that the `token` is removed.
+          if (400 === rejection.status 
+                && rejection.data 
+                && ('invalid_request' === rejection.data.error || 'invalid_grant' === rejection.data.error)
+          ) {
+            OAuthToken.removeToken();
+
+            $rootScope.$emit('oauth:error', {rejection: rejection, deferred: deferred});
+          }
+
+          // Catch `invalid_token` and `unauthorized` errors.
+          // The token isn't removed here so it can be refreshed when the `invalid_token` error occurs.
+          if (401 === rejection.status &&
+            (rejection.data 
+            && 'access_denied' === rejection.data.error) || (rejection.headers('www-authenticate') 
+            && 0 === rejection.headers('www-authenticate').indexOf('Bearer'))
+          ) {
+            $rootScope.$emit('oauth:error', {rejection: rejection, deferred: deferred});
+          }
+
+          return deferred.promise;
+        }
+      };
 }]);
 angular.module('app.services').service('Project',
         ['$resource','$filter','$httpParamSerializer','appConfig',
@@ -745,9 +887,34 @@ angular.module('app.services').service('Project',
                 }
             });
 }]);
-
-
-
+angular.module('app.services')
+        .service('ProjectFile',['$resource','appConfig','Url',
+        function($resource,appConfig,Url) {
+        var url = appConfig.baseUrl + Url.getUrlResource(appConfig.urls.projectFile);
+        return $resource(url, 
+        {
+            id: '@id',
+            idFile: '@idFile'
+        }, 
+        {
+            update: {
+                method: 'PUT'
+            },
+            download: {
+                url: appConfig.baseUrl 
+                    + Url.getUrlResource(appConfig.urls.projectFile)  + '/download',
+                method: 'GET'
+            }
+        });
+}]);
+angular.module('app.services').service('ProjectMember',['$resource','appConfig',
+        function($resource,appConfig) {
+        return $resource(appConfig.baseUrl + '/project/:id/member/:idProjectMember', {idProjectMember: '@idProjectMember'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+}]);
 angular.module('app.services').service('ProjectNote',['$resource','appConfig',
         function($resource,appConfig) {
         return $resource(appConfig.baseUrl + '/project/:id/note/:idNote', {idNote: '@idNote'}, {
@@ -756,6 +923,74 @@ angular.module('app.services').service('ProjectNote',['$resource','appConfig',
             }
         });
 }]);
+angular.module('app.services').service('ProjectTask',['$resource','$filter','appConfig',
+        function($resource,$filter,appConfig) {
+            
+            function transformData(data) {
+                if(angular.isObject(data)) {
+                    var o = angular.copy(data);
+                    if (data.hasOwnProperty('start_date')) {
+                        o.start_date = $filter('date')(data.start_date,'yyyy-MM-dd');                        
+                    }
+                    if (data.hasOwnProperty('due_date')) {
+                        o.due_date = $filter('date')(data.due_date,'yyyy-MM-dd');                        
+                    }
+                    return appConfig.utils.transformRequest(o);
+                }
+                return data;                
+            };
+            
+            return $resource(appConfig.baseUrl + '/project/:id/task/:idTask', {idTask: '@idTask'}, {
+                save: {
+                    method: 'POST',
+                    transformRequest: transformData
+                },
+                get: {
+                    method: 'GET',
+                    transformResponse: function(data,headers) {
+                        var o = appConfig.utils.transformResponse(data, headers);
+                        if(angular.isObject(o)) { 
+                            if (o.hasOwnProperty('start_date') && o.start_date) {
+                                var arrayStartDate = o.start_date.split('-'),
+                                        month = parseInt(arrayStartDate[1]) - 1;
+                                o.start_date = new Date(arrayStartDate[0],month,arrayStartDate[2]);
+                            }
+                            if (o.hasOwnProperty('due_date') && o.due_date) {
+                                var arrayDueDate = o.due_date.split('-'),
+                                        month = parseInt(arrayDueDate[1]) - 1;
+                                o.due_date = new Date(arrayDueDate[0],month,arrayDueDate[2]);
+                            }
+                        }
+                        return o;
+                    }
+                },
+                update: {
+                    method: 'PUT',
+                    transformRequest: transformData
+                },
+                delete: {
+                    method: 'DELETE'
+                }
+        });
+}]);
+angular.module('app.services').service('Url',['$interpolate',
+        function($interpolate) {
+            return {
+                getUrlFromUrlSymbol: function(url,params) {
+                    var urlMod = $interpolate(url)(params);
+                    return urlMod.replace(/\/\//g,'/')
+                            .replace(/\/$/,'');
+                },
+                getUrlResource: function(url) {
+                    
+                    return url.replace(new RegExp('{{', 'g'), ':')
+                            .replace(new RegExp('}}', 'g'), '');
+                    
+                }
+            };
+}]);
+
+
 angular.module('app.services').service('User',['$resource','appConfig',function($resource,appConfig) {
         return $resource(appConfig.baseUrl + '/user', {}, {
             authenticated: {
@@ -806,59 +1041,6 @@ angular.module('app.controllers')
                        $location.path('/clients'); 
                     });
                 };
-        }]);
-angular.module('app.controllers')
-        .controller('ProjectNoteEditController', [
-            '$scope','$location','$routeParams','ProjectNote', 
-            function ($scope, $location, $routeParams, ProjectNote) {
-                $scope.projectNote = ProjectNote.get({id:$routeParams.id,idNote: $routeParams.idNote});
-                
-                $scope.save = function() {
-                    if($scope.form.$valid) {
-                        ProjectNote.update({id:$routeParams.id,idNote:$scope.projectNote.id},$scope.projectNote,function() {
-                            $location.path('/project/' + $routeParams.id + '/notes');
-                        });
-                    }
-                };
-        }]);
-angular.module('app.controllers')
-        .controller('ProjectNoteListController', ['$scope','$routeParams','ProjectNote',
-        function ($scope,$routeParams,ProjectNote) {
-                $scope.projectNotes = ProjectNote.query({id:$routeParams.id});
-
-        }]);
-angular.module('app.controllers')
-        .controller('ProjectNoteNewController', [
-                '$scope','$location','$routeParams','ProjectNote',
-                function ($scope,$location,$routeParams,ProjectNote) {
-                $scope.projectNote = new ProjectNote();
-                $scope.projectNote.project_id = $routeParams.id;
-                
-                $scope.save = function() {
-                    if($scope.form.$valid) {
-                        $scope.projectNote.$save({id:$routeParams.id}).then(function() {
-                            $location.path('/project/' + $routeParams.id + '/notes');
-                        });
-                    }
-                };
-        }]);
-angular.module('app.controllers')
-        .controller('ProjectNoteRemoveController', [
-            '$scope','$location','$routeParams','ProjectNote', 
-            function ($scope, $location, $routeParams, ProjectNote) {
-                $scope.projectNote = ProjectNote.get({id:$routeParams.id,idNote: $routeParams.idNote});
-               
-                $scope.remove = function() {
-                    $scope.projectNote.$delete({id:$routeParams.id,idNote: $routeParams.idNote}).then(function(){
-                       $location.path('/project/' + $routeParams.id + '/notes'); 
-                    });
-                };
-        }]);
-angular.module('app.controllers')
-        .controller('ProjectNoteShowController', ['$scope','$routeParams','ProjectNote',
-        function ($scope,$routeParams,ProjectNote) {
-                $scope.projectNote = ProjectNote.get({idNote: $routeParams.idNote});
-
         }]);
 angular.module('app.controllers')
         .controller('ProjectEditController', [
@@ -970,6 +1152,119 @@ angular.module('app.controllers')
                 };
         }]);
 angular.module('app.controllers')
+        .controller('ProjectFileEditController', [
+            '$scope','$location','$routeParams','ProjectFile', 
+            function ($scope, $location, $routeParams, ProjectFile) {
+                $scope.projectFile = ProjectFile.get({id:$routeParams.id,idFile: $routeParams.idFile});
+                
+                $scope.save = function() {
+                    if($scope.form.$valid) {
+                        ProjectFile.update({id:$routeParams.id,idFile:$scope.projectFile.id},$scope.projectFile,function() {
+                            $location.path('/project/' + $routeParams.id + '/files');
+                        });
+                    }
+                };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectFileListController', ['$scope','$routeParams','ProjectFile',
+        function ($scope,$routeParams,ProjectFile) {
+                $scope.projectFiles = ProjectFile.query({id:$routeParams.id});
+
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectFileNewController', [
+                '$scope','$location','$routeParams', 'appConfig', 'Url', 'Upload',
+                function ($scope, $location, $routeParams, appConfig, Url, Upload) {
+                    $scope.save = function() {
+                        console.log("Olá????");
+                        if($scope.form.$valid) {
+                            console.log("AQUI!!!");
+                            var url = appConfig.baseUrl + 
+                                    Url.getUrlFromUrlSymbol(appConfig.urls.projectFile, {
+                                        id: $routeParams.id,
+                                        idFile: ''
+                                    });
+                            Upload.upload({
+                                url: url,
+                                fields: {
+                                    name: $scope.projectFile.name,
+                                    description: $scope.projectFile.description,
+                                    project_id: $routeParams.id
+                                },
+                                file: $scope.projectFile.file
+                            }).success(function(data, status, headers, config) {
+                                $location.path('/project/' + $routeParams.id + '/files');
+                            });
+                        }
+                    };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectFileRemoveController', [
+            '$scope','$location','$routeParams','ProjectFile', 
+            function ($scope, $location, $routeParams, ProjectFile) {
+                $scope.projectFile = ProjectFile.get({id:$routeParams.id,idFile: $routeParams.idFile});
+               
+                $scope.remove = function() {
+                    $scope.projectFile.$delete({id:$routeParams.id,idFile: $routeParams.idFile}).then(function(){
+                       $location.path('/project/' + $routeParams.id + '/files'); 
+                    });
+                };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectMemberListController', ['$scope','$routeParams','ProjectMember','User','appConfig',
+        function ($scope,$routeParams,ProjectMember,User,appConfig) {
+                $scope.projectMember = new ProjectMember();
+                
+                $scope.save = function() {
+                    if($scope.form.$valid) {
+                        $scope.projectMember.$save({id:$routeParams.id}).then(function() {
+                            $scope.projectMember = new ProjectMember();
+                            $scope.loadMember();
+                        });
+                    }                    
+                };
+                
+                $scope.loadMember = function() {
+                    $scope.projectMembers = ProjectMember.query({
+                        id: $routeParams.id,
+                        orderBy: 'id',
+                        sortedBy: 'desc'
+                    });
+                };
+                
+                $scope.loadMember();
+                
+                $scope.formatName = function(model) {
+                    if(model) {
+                        return model.name;
+                    }
+                    return '';
+                };
+                
+                $scope.getUsers = function(name) {
+                    return User.query({
+                        search: name,
+                        searchFields: 'name:like' 
+                    }).$promise;
+                };
+                
+                $scope.selectUser = function(item) {
+                    $scope.projectMember.member_id = item.id;
+                };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectMemberRemoveController', [
+            '$scope','$location','$routeParams','ProjectMember', 
+            function ($scope, $location, $routeParams, ProjectMember) {
+                $scope.projectMember = ProjectMember.get({id:$routeParams.id,idProjectMember: $routeParams.idProjectMember});
+               
+                $scope.remove = function() {
+                    $scope.projectMember.$delete({id:$routeParams.id,idProjectMember: $routeParams.idProjectMember}).then(function(){
+                       $location.path('/project/' + $routeParams.id + '/members'); 
+                    });
+                };
+        }]);
+angular.module('app.controllers')
         .controller('ProjectNoteEditController', [
             '$scope','$location','$routeParams','ProjectNote', 
             function ($scope, $location, $routeParams, ProjectNote) {
@@ -1021,5 +1316,114 @@ angular.module('app.controllers')
         function ($scope,$routeParams,ProjectNote) {
                 $scope.projectNote = ProjectNote.get({idNote: $routeParams.idNote});
 
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectTaskEditController', [
+                '$scope','$location','$routeParams','ProjectTask','appConfig',
+                function ($scope,$location,$routeParams,ProjectTask,appConfig) {
+                $scope.status = appConfig.projectTask.status;
+                $scope.projectTask = ProjectTask.get({id:$routeParams.id,idTask: $routeParams.idTask});
+                
+                
+                $scope.start_date = {
+                    status: {
+                        opened: false
+                    }
+                };
+                
+                $scope.due_date = {
+                    status: {
+                        opened: false
+                    }
+                };
+                
+                $scope.openStartDatePicker = function($event) {
+                    $scope.start_date.status.opened = true;
+                };
+                
+                $scope.openDueDatePicker = function($event) {
+                    $scope.due_date.status.opened = true;
+                };
+                
+                $scope.save = function() {
+                    if($scope.form.$valid) {
+                        ProjectTask.update({id:$routeParams.id,idTask:$scope.projectTask.id},$scope.projectTask,function() {
+                            $location.path('/project/' + $routeParams.id + '/tasks');
+                        });
+                    }
+                };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectTaskListController', ['$scope','$routeParams','ProjectTask','appConfig',
+        function ($scope,$routeParams,ProjectTask,appConfig) {
+                $scope.projectTask = new ProjectTask();
+                
+                $scope.save = function() {
+                    if($scope.form.$valid) {
+                        $scope.projectTask.status = appConfig.projectTask.status[0].value;
+                        $scope.projectTask.$save({id:$routeParams.id}).then(function() {
+                            $scope.projectTask = new ProjectTask();
+                            $scope.loadTask();
+                        });
+                    }                    
+                };
+                
+                $scope.loadTask = function() {
+                    $scope.projectTasks = ProjectTask.query({
+                        id: $routeParams.id,
+                        orderBy: 'id',
+                        sortedBy: 'desc'
+                    });
+                };
+                
+                $scope.loadTask();
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectTaskNewController', [
+                '$scope','$location','$routeParams','ProjectTask','appConfig',
+                function ($scope,$location,$routeParams,ProjectTask,appConfig) {
+                $scope.projectTask = new ProjectTask();
+                $scope.projectTask.project_id = $routeParams.id;
+                $scope.status = appConfig.projectTask.status;
+                
+                $scope.start_date = {
+                    status: {
+                        opened: false
+                    }
+                };
+                
+                $scope.due_date = {
+                    status: {
+                        opened: false
+                    }
+                };
+                
+                $scope.openStartDatePicker = function($event) {
+                    $scope.start_date.status.opened = true;
+                };
+                
+                $scope.openDueDatePicker = function($event) {
+                    $scope.due_date.status.opened = true;
+                };
+                
+                $scope.save = function() {
+                    if($scope.form.$valid) {
+                        $scope.projectTask.$save({id:$routeParams.id}).then(function() {
+                            $location.path('/project/' + $routeParams.id + '/tasks');
+                        });
+                    }
+                };
+        }]);
+angular.module('app.controllers')
+        .controller('ProjectTaskRemoveController', [
+            '$scope','$location','$routeParams','ProjectTask', 
+            function ($scope, $location, $routeParams, ProjectTask) {
+                $scope.projectTask = ProjectTask.get({id:$routeParams.id,idTask: $routeParams.idTask});
+               
+                $scope.remove = function() {
+                    $scope.projectTask.$delete({id:$routeParams.id,idTask: $routeParams.idTask}).then(function(){
+                       $location.path('/project/' + $routeParams.id + '/tasks'); 
+                    });
+                };
         }]);
 //# sourceMappingURL=all.js.map
